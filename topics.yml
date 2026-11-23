@@ -1,0 +1,267 @@
+# Every talking point on the site, its maturity and where it is headed.
+#
+# The status strip on each page and the board are built from this file.
+# `maturity` is set by a person and only by a person (see
+# docs/about/maturity.md). `proposed` is a first reading from the
+# repository's evidence, for that person to accept or correct.
+# A change of level goes in its own commit, with the reason.
+
+levels:
+  settled:
+    label: Settled
+    meaning: Designed with recorded decisions, reviewed by a person other than its author, tested end to end.
+  working:
+    label: Working
+    meaning: Built and tested end to end. The design has not been reviewed by another person.
+  sketch:
+    label: Sketch
+    meaning: In the code, mostly generated, not reviewed. Proves that something is possible.
+  question:
+    label: Question
+    meaning: Not built. A stated question.
+
+destinations:
+  core-1:
+    label: Core, step 1
+  core-2:
+    label: Core, step 2
+  core-3:
+    label: Core, step 3
+  core-4:
+    label: Core, step 4
+  core-5:
+    label: Core, step 5
+  poc:
+    label: Stays in the proof of concept
+  later:
+    label: Later
+  open:
+    label: Not decided
+
+packages:
+  groundwork:
+    label: Groundwork in core
+    summary: Small additive changes to Typed Data, validation and the Field API that the three concepts read from. Not a concept of its own.
+  structures:
+    label: Structures
+    summary: The description of a thing's data. Read from config schema and field definitions, or declared in code where those cannot say enough.
+  resources:
+    label: Resources and operations
+    summary: The thing itself, where it is stored, who may change it, and the named actions on it. A form, a Tool API tool and HTTP are each one way to run an operation.
+  portable-schema:
+    label: Portable Schema
+    summary: How a structure is written down and served. JSON Schema, with a small agreed set of extension keywords.
+  poc:
+    label: Stays in the proof of concept
+    summary: Working parts that are not part of the core path.
+  questions:
+    label: Open questions
+    summary: Not decided yet.
+
+topics:
+  # Groundwork in core
+  - slug: facts-on-a-definition
+    title: Facts a data definition cannot state today
+    package: groundwork
+    destination: core-1
+    page: path/groundwork.md
+    maturity: null
+    proposed: null
+
+  # Structures
+  - slug: structure
+    title: The structure
+    package: structures
+    destination: core-1
+    page: path/structures.md
+    maturity: null
+    proposed: null
+  - slug: reading-config-schema
+    title: Structures read from config schema
+    package: structures
+    destination: core-1
+    page: path/structures.md#read-from-config-schema
+    maturity: null
+    proposed: null
+  - slug: reading-field-definitions
+    title: Structures read from field definitions
+    package: structures
+    destination: core-1
+    page: path/structures.md#read-from-field-definitions
+    maturity: null
+    proposed: null
+  - slug: declaring-a-structure
+    title: Declaring a structure in code
+    package: structures
+    destination: core-1
+    page: path/structures.md#declared-in-code
+    maturity: null
+    proposed: null
+  - slug: variants
+    title: Keys that depend on another key's value
+    package: structures
+    destination: core-1
+    page: path/structures.md#variants
+    maturity: null
+    proposed: null
+  - slug: options
+    title: Choices that depend on the site
+    package: structures
+    destination: core-1
+    page: path/structures.md#choices
+    maturity: null
+    proposed: null
+  - slug: secrets
+    title: Secret values
+    package: structures
+    destination: open
+    page: path/structures.md#secrets
+    maturity: null
+    proposed: null
+
+  # Resources and operations
+  - slug: resource
+    title: The resource
+    package: resources
+    destination: core-2
+    page: path/resources-operations.md
+    maturity: null
+    proposed: null
+  - slug: operation
+    title: The operation
+    package: resources
+    destination: core-2
+    page: path/resources-operations.md#operations
+    maturity: null
+    proposed: null
+  - slug: access
+    title: Access and permissions
+    package: resources
+    destination: core-2
+    page: path/resources-operations.md#access
+    maturity: null
+    proposed: null
+  - slug: validation
+    title: One validation for every way in
+    package: resources
+    destination: core-2
+    page: path/resources-operations.md#validation
+    maturity: null
+    proposed: null
+  - slug: storage
+    title: Storage stays where it is
+    package: resources
+    destination: core-2
+    page: path/resources-operations.md#storage
+    maturity: null
+    proposed: null
+
+  # Structures: another module's keys
+  - slug: narrowing
+    title: Adding to and narrowing another module's description
+    package: structures
+    destination: core-3
+    page: path/structures.md#another-module
+    maturity: null
+    proposed: null
+  - slug: resources-beside
+    title: A module's own data beside another module's
+    package: structures
+    destination: open
+    page: path/structures.md#beside
+    maturity: null
+    proposed: null
+
+  # Portable Schema
+  - slug: served-contract
+    title: The served contract
+    package: portable-schema
+    destination: core-4
+    page: path/portable-schema.md#served
+    maturity: null
+    proposed: null
+  - slug: extension-keywords
+    title: The extension keywords
+    package: portable-schema
+    destination: open
+    page: path/portable-schema.md#extension-keywords
+    maturity: null
+    proposed: null
+
+  # Resources and operations: forms
+  - slug: generated-forms
+    title: Forms read from the description
+    package: resources
+    destination: core-5
+    page: path/resources-operations.md#forms
+    maturity: null
+    proposed: null
+  - slug: widgets
+    title: Widgets for generated forms
+    package: resources
+    destination: core-5
+    page: path/resources-operations.md#widgets
+    maturity: null
+    proposed: null
+
+  # Resources and operations: ways in
+  - slug: tool-api
+    title: Operations as Tool API tools
+    package: resources
+    destination: core-4
+    page: why/not-tool-api.md
+    maturity: null
+    proposed: null
+  - slug: http
+    title: HTTP and OpenAPI
+    package: resources
+    destination: later
+    page: path/stays-in-poc.md#http
+    maturity: null
+    proposed: null
+
+  # Stays in the proof of concept
+  - slug: staging
+    title: Staged edits and multi-step flows
+    package: poc
+    destination: poc
+    page: path/stays-in-poc.md#staging
+    maturity: null
+    proposed: null
+  - slug: react
+    title: A React package
+    package: poc
+    destination: poc
+    page: path/stays-in-poc.md#react
+    maturity: null
+    proposed: null
+  - slug: generator
+    title: Generating a resource from what exists
+    package: poc
+    destination: poc
+    page: path/stays-in-poc.md#generator
+    maturity: null
+    proposed: null
+
+  # Open questions
+  - slug: owner-rule-changes
+    title: May another module change a rule its owner declared?
+    package: questions
+    destination: open
+    page: open/index.md#owner-rules
+    maturity: question
+    proposed: null
+  - slug: entries-in-owner-list
+    title: Entries a module adds inside a list its owner stores
+    package: questions
+    destination: open
+    page: open/index.md#entries
+    maturity: question
+    proposed: null
+  - slug: observability
+    title: Recording who ran what
+    package: questions
+    destination: open
+    page: open/index.md#observability
+    maturity: question
+    proposed: null

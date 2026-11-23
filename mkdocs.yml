@@ -1,0 +1,91 @@
+site_name: Surface API and Drupal core
+site_description: One description per piece of data, and a path for it into Drupal core.
+site_url: https://mlander.github.io/surface_docs/
+repo_url: https://github.com/mlander/surface_docs
+repo_name: surface_docs
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.tabs.link
+    - content.action.edit
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Light mode
+
+hooks:
+  - hooks.py
+
+extra_css:
+  - stylesheets/status.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  # Code on the site is pulled from the module at the pinned commit, by
+  # file and line range: --8<-- "path/in/module.php:10:40". A path that
+  # does not exist fails the build.
+  - pymdownx.snippets:
+      base_path:
+        - module
+      check_paths: true
+
+nav:
+  - Home: index.md
+  - Why:
+      - why/index.md
+      - One more description: why/one-more-description.md
+      - Why not Tool API: why/not-tool-api.md
+      - Why not forms from config schema: why/not-config-schema-forms.md
+      - What it builds on: why/builds-on.md
+      - What it could consolidate: why/consolidates.md
+  - Adopting it:
+      - adopting/index.md
+      - Place Block: adopting/place-block.md
+      - Site information: adopting/site-information.md
+      - Fields and Tool API tools: adopting/fields-and-tools.md
+      - What contrib sees: adopting/contrib.md
+  - Path into core:
+      - path/index.md
+      - Structures: path/structures.md
+      - Resources and operations: path/resources-operations.md
+      - Portable Schema: path/portable-schema.md
+      - Groundwork in core: path/groundwork.md
+      - Stays in the proof of concept: path/stays-in-poc.md
+      - How each piece is validated: path/validation.md
+      - Release fit: path/release-fit.md
+  - Board: board.md
+  - Open questions:
+      - open/index.md
+      - Questions for another day: open/later.md
+      - Proposing a change: open/proposing-a-change.md
+  - About:
+      - The maturity levels: about/maturity.md
+      - How this site works: about/this-site.md

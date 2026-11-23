@@ -1,0 +1,28 @@
+.status-strip {
+  margin: 0 0 1.5em;
+  padding: 0.5em 0.8em;
+  border-left: 0.2rem solid var(--md-primary-fg-color);
+  background: var(--md-code-bg-color);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+.level {
+  display: inline-block;
+  padding: 0 0.5em;
+  border-radius: 0.2rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: #fff;
+}
+
+.level-settled { background: #2e7d32; }
+.level-working { background: #1565c0; }
+.level-sketch { background: #ef6c00; }
+.level-question { background: #6a1b9a; }
+.level-unrated { background: #757575; }
+
+.level-proposed {
+  font-style: italic;
+  opacity: 0.8;
+}
