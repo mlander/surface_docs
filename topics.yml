@@ -66,7 +66,13 @@ topics:
     destination: core-1
     page: path/groundwork.md
     maturity: null
-    proposed: null
+    evidence:
+      - 'Eleven small changes to Typed Data, validation and the Field API are drafted but unfiled: module/docs/core-gaps.md, Step 1 (1.1 to 1.11)'
+      - 'Code: module/src/DefinitionMetadata.php, module/src/KeyFacts.php, module/src/Contract/ConstraintKeywords.php'
+      - 'Tests: tests/src/Unit/DefinitionMetadataTest.php, KeyFactsTest.php, ConstraintKeywordsTest.php, tests/src/Kernel/DefaultConstraintsTest.php'
+      - 'decisions.md: "One adapter runs a constraint; the Typed Data footprint is pinned"; "A fact is read from the schema, and the options service takes a schema"'
+      - 'No maintainer decision found on the eleven changes themselves; not marked experimental'
+    proposed: working
 
   # Structures
   - slug: structure
@@ -75,49 +81,91 @@ topics:
     destination: core-1
     page: path/structures.md
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Structure, module/src/Contract/Schemas.php, module/src/SurfaceBuilder.php, module/src/Resource/StructureInterface.php'
+      - 'Tests: tests/src/Kernel/SurfaceBuilderTest.php, SchemaRoundTripTest.php, ShapesTest.php, AttachedStructureTest.php, EmptyStructureTest.php'
+      - 'decisions.md: "A shape is a named definition"; "A blueprint takes no complex data types" (decided 2026-11-01, by the maintainer); "The surface was counted and cut" (decided 2026-10-24, by the owner)'
+      - 'Rename "node" to "schema" approved by the user 2026-11-16 (drupal_7_13/design-schema-as-model.md); series landed on 1.0.x 75a53469'
+      - 'Not marked experimental as a whole'
+    proposed: settled
   - slug: reading-config-schema
     title: Structures read from config schema
     package: structures
     destination: core-1
     page: path/structures.md#read-from-config-schema
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Reader/ConfigSchemaReader.php, module/src/Variants/ConfigSchemaTypes.php'
+      - 'Tests: tests/src/Kernel/ConfigSchemaReaderTest.php, ConfigSchemaTypesTest.php, ConfigSchemaCensusTest.php, ConfigSchemaDriftTest.php'
+      - 'decisions.md: "The remaining readers read schemas"; "A mixin may be chosen by a sibling key" (decided 2026-11-05, by the maintainer)'
+      - 'Marked experimental: module/docs/reading-a-schema.md and glossary "Reader", "Open"'
+      - 'Tested widely, but the docs call the idea one of the module''s bolder ideas, so it stays at sketch'
+    proposed: sketch
   - slug: reading-field-definitions
     title: Structures read from field definitions
     package: structures
     destination: core-1
     page: path/structures.md#read-from-field-definitions
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Reader/TypedDataReader.php, module/src/DefinitionMetadata.php, module/src/Resource/ComputesValueInterface.php'
+      - 'Tests: tests/src/Kernel/TypedDataReaderTest.php, DefinitionMetadataFieldDefinitionTest.php, FieldInstanceResourceTest.php, FieldToolsTest.php'
+      - 'decisions.md: "The remaining readers read schemas"; "A definition is read by a pure function; the projection holds the request"'
+      - 'Marked experimental: module/docs/reading-a-schema.md covers the Typed Data reader'
+      - 'User stated 2026-11-20 that Typed Data is known only at the reader (decisions-tonight-2026-11-17.md); the reader itself is flagged experimental'
+    proposed: sketch
   - slug: declaring-a-structure
     title: Declaring a structure in code
     package: structures
     destination: core-1
     page: path/structures.md#declared-in-code
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/SurfaceBuilder.php, module/src/Attribute, module/src/Resource/DeclaresByProperties.php, module/src/Entry.php'
+      - 'Tests: tests/src/Kernel/SurfaceBuilderTest.php, PropertyDeclarationTest.php, SchemaAttributesTest.php, tests/src/Unit/SchemasTest.php'
+      - 'decisions.md: "A resource or structure is static"; "A class may declare its keys as properties"; "A blueprint takes no complex data types" (maintainer, 2026-11-01)'
+      - 'One-verb blueprint built on the user''s go of 2026-11-20 (design-blueprint-as-schema.md, item 42)'
+      - 'The properties spelling is marked experimental (module/docs/declaring-a-resource.md, "Declared as properties")'
+    proposed: working
   - slug: variants
     title: Keys that depend on another key's value
     package: structures
     destination: core-1
     page: path/structures.md#variants
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Variants.php, module/src/Variants, module/src/Contract/Conditionals.php'
+      - 'Tests: tests/src/Kernel/VariantsHoldTest.php, LazyVariantsTest.php, ManyListedVariantsTest.php, VariantsFromSiteTest.php, FlatVariantsStorageLayoutTest.php'
+      - 'decisions.md: "Variants, not slots"; "A mixin may be chosen by a sibling key" (decided 2026-11-05, by the maintainer); "Variants stored flat are a storage layout" (decided 2026-11-06, by the maintainer)'
+      - 'design-composition-vocabulary.md: the user answered "Ok go" on 2026-11-06'
+      - 'Only the flat storage layout is marked experimental (module/docs/storage.md, "Variants stored flat")'
+    proposed: settled
   - slug: options
     title: Choices that depend on the site
     package: structures
     destination: core-1
     page: path/structures.md#choices
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Options (OptionSet, OptionsProvider, SurfaceOptionsResolverManager)'
+      - 'Tests: tests/src/Kernel/OptionsProviderTest.php, SurfaceOptionsResolverTest.php, LabeledChoiceTest.php, KeysFromSiteTest.php, tests/src/Unit/OptionSetTest.php'
+      - 'decisions.md: "Our options answer core''s question"; "The empty option rule"; "Keys that come from the site"'
+      - 'module/docs/options.md; core-gaps.md 1.6 "Labels on Choice"'
+      - 'No maintainer decision found specific to options; not marked experimental'
+    proposed: working
   - slug: secrets
     title: Secret values
     package: structures
     destination: open
     page: path/structures.md#secrets
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Contract/Secrets.php, module/src/Staging/StagedSecrets.php, module/src/Storage/SodiumSecretCodec.php'
+      - 'Tests: tests/src/Unit/SecretsTest.php, SodiumSecretCodecTest.php, tests/src/Kernel/NestedSecretsTest.php, SecretSettingsTest.php, StagedSecretsTest.php'
+      - 'decisions.md: "A secret is not served at any depth"; "A secret is optional, never nullable"; "A read leaves a secret out"; "A list''s secret items"'
+      - 'Stage-side secrets were question 38 of design-stage-v2.md; no separate human decision on secrets found'
+      - 'Not marked experimental; destination not decided'
+    proposed: working
 
   # Resources and operations
   - slug: resource
@@ -126,35 +174,65 @@ topics:
     destination: core-2
     page: path/resources-operations.md
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Resource (ResourceInterface, ResourceBuild), module/src/Plugin, module/src/Surface.php'
+      - 'Tests: tests/src/Kernel/ResourceBuildTest.php, FirstResourceTest.php, ResourceDiscoveryTest.php, ResourceCatalogTest.php, UniqueIdentityTest.php'
+      - 'decisions.md: "Resources, structures and operations"; "A resource has storage or a host"; "The surface was counted and cut" (decided 2026-10-24, by the owner)'
+      - 'Naming: "No Drupal terms reused" rename approved by the user 2026-11-16; module/docs/resources.md'
+      - 'Not marked experimental'
+    proposed: settled
   - slug: operation
     title: The operation
     package: resources
     destination: core-2
     page: path/resources-operations.md#operations
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Operation (OperationRunner, Refusal, Door), module/src/Resource/OperationContext.php'
+      - 'Tests: tests/src/Kernel/OperationRunnerTest.php, OperationKindsTest.php, OperationFactsTest.php, ChildOperationTest.php, ResultCodesTest.php'
+      - 'decisions.md: "The ids are the standard five, the labels are Drupal''s" (decided 2026-10-23, by the owner); "An operation on the class"; "One runner runs an operation"; "An operation states how it behaves"'
+      - 'Runner built on the user''s "go on three wins" (architecture audit 2026-11-09, slices 12a to 12c)'
+      - 'Not marked experimental'
+    proposed: settled
   - slug: access
     title: Access and permissions
     package: resources
     destination: core-2
     page: path/resources-operations.md#access
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Access (OperationGate, OperationAccessCheck), module/src/SurfaceAccess.php, module/src/Resource/AccessAnswer.php'
+      - 'Tests: tests/src/Kernel/AlterAccessTest.php, LockedAccessTest.php, StaticRuntimeAccessTest.php, OperationRouteAccessTest.php, PipelineAccessTest.php'
+      - 'decisions.md: "Access has three answers"; "Access is static or runtime, read from its cacheability"; "A gate is borrowed, never copied"; "Locked at the top"'
+      - 'module/docs/core-gaps.md Step 2 is not drafted for core'
+      - 'No maintainer decision found beyond the owner''s approval of review groups; not marked experimental'
+    proposed: working
   - slug: validation
     title: One validation for every way in
     package: resources
     destination: core-2
     page: path/resources-operations.md#validation
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Validation, module/src/Pipeline, module/src/Contract/ConstraintKeywords.php'
+      - 'Tests: tests/src/Kernel/ConstraintRunnerTest.php, PipelineParityTest.php, PortableValidationTest.php, EveryDoorAgreesTest.php, tests/src/Unit/PortableValidatorTest.php'
+      - 'decisions.md: "A definition is validated as itself"; "One adapter runs a constraint; the Typed Data footprint is pinned"; "The validator''s checks and the document read schemas"'
+      - 'module/docs/pipeline.md; page docs/path/validation.md'
+      - 'No recorded human decision on the validation design itself; not marked experimental'
+    proposed: working
   - slug: storage
     title: Storage stays where it is
     package: resources
     destination: core-2
     page: path/resources-operations.md#storage
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Storage, module/src/Resource/ResourceStorageInterface.php, module/src/Reference/ReferenceStorageLayout.php'
+      - 'Tests: tests/src/Kernel/StorageTest.php, ConfigObjectResourceStorageTest.php, ContentEntityStorageTest.php, ConfigEntityResourceStorageTest.php, ReadWriteRoundTripTest.php'
+      - 'decisions.md: "A resource has storage or a host"; "A storage layout is the storage''s one word on its shape"; "A config object is named on a subclass"'
+      - 'Layout rule decided 2026-11-06 by the maintainer ("Variants stored flat are a storage layout"), which touches storage only at its edge'
+      - 'module/docs/storage.md; not marked experimental except the flat variants layout'
+    proposed: working
 
   # Structures: another module's keys
   - slug: narrowing
@@ -163,14 +241,25 @@ topics:
     destination: core-3
     page: path/structures.md#another-module
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Resource/BlueprintAdditionsInterface.php, module/src/Refinement, module/src/SurfaceRefinerInterface.php, module/src/Contract/Conditionals.php'
+      - 'Tests: tests/src/Kernel/DeclaredNarrowingTest.php, AlterAccessTest.php, AlterWordingTest.php, RefinementIsolationTest.php, tests/src/Unit/NarrowingTypesTest.php'
+      - 'decisions.md: "Where an alter''s keys live"; "An alter attaches at its own mount"; "An extension is a variant the site adds, or an alter"; "Gating per key"'
+      - 'core-gaps.md Step 3 (third-party settings for simple config) is not drafted; placement to settle with fago (memory: alter-keys-placement-2026-11-12)'
+      - 'Not marked experimental'
+    proposed: working
   - slug: resources-beside
     title: A module's own data beside another module's
     package: structures
     destination: open
     page: path/structures.md#beside
     maturity: null
-    proposed: null
+    evidence:
+      - 'drupal_7_13/design-resources-beside.md: direction accepted by the user 2026-11-16, "Nothing here is built"'
+      - 'No source directory implements it; no tests'
+      - 'decisions.md has no heading for it'
+      - 'Placed after the schema-model series; module/docs/resources.md "Which way to compose" covers only today''s alter route'
+    proposed: question
 
   # Portable Schema
   - slug: served-contract
@@ -179,14 +268,26 @@ topics:
     destination: core-4
     page: path/portable-schema.md#served
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Contract/ContractEmitter.php, ServedContract.php, ContractBaselines.php, ContractDiff.php, module/src/Controller'
+      - 'Tests: tests/src/Kernel/ServedContractTest.php, PortableServedContractTest.php, ContractBaselineTest.php, ContractDiffCommandTest.php, OutputsConformanceTest.php'
+      - 'decisions.md: "Two documents, never stricter than the runtime"; "Contract 4: fewer keywords, nothing new on the wire" (decided 2026-10-24, by the owner); "One result at every door"'
+      - 'module/docs/served-contract.md, module/docs/audit-never-stricter.md; core-gaps.md Step 4 not drafted as one'
+      - 'Not marked experimental (the React client is)'
+    proposed: settled
   - slug: extension-keywords
     title: The extension keywords
     package: portable-schema
     destination: open
     page: path/portable-schema.md#extension-keywords
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Contract/PortableKeywords.php, KeywordWriter.php, KeywordRules.php, PortableUi.php, PortableLinks.php, Keywords'
+      - 'Tests: tests/src/Kernel/KeywordWriterBatteryTest.php, KeywordWriterKeysTest.php, LinksKeywordTest.php, UiKeywordTest.php, tests/src/Unit/KeywordWriterTest.php'
+      - 'decisions.md: "A rule declared as data"; "A rule is a keyword first, a list second, code last"; "Contract 4: fewer keywords" (owner)'
+      - 'The agreed set with fago is open: the reads: keyword and the fork update are held by the user''s word (decisions-tonight-2026-11-17.md)'
+      - 'Not marked experimental; destination not decided'
+    proposed: working
 
   # Resources and operations: forms
   - slug: generated-forms
@@ -195,14 +296,26 @@ topics:
     destination: core-5
     page: path/resources-operations.md#forms
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Form (SurfaceFormBuilder, SurfaceOperationForm, Refreshing, Extracting)'
+      - 'Tests: tests/src/Kernel/SurfaceFormTest.php, SurfaceOperationFormTest.php, DocumentFormTest.php, tests/src/Functional/ExampleFormTest.php, FullSubmitTest.php'
+      - 'decisions.md: "A widget is chosen from the definition"; "The form builder draws, extracts and refreshes"; "Arrangement is declared once"; "The form never refuses to draw a declared key"'
+      - 'core-gaps.md Step 5 "Form API, last": not drafted; module/docs/forms.md'
+      - 'No maintainer decision found on the form design itself; not marked experimental'
+    proposed: working
   - slug: widgets
     title: Widgets for generated forms
     package: resources
     destination: core-5
     page: path/resources-operations.md#widgets
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Widget (SurfaceWidgetBase, SurfaceWidgetManager, ChoiceWidgetBase), module/src/Contract/WidgetChoice.php'
+      - 'Tests: tests/src/Kernel/StockWidgetsTest.php, WidgetAgreementTest.php, WidgetAskTest.php, WidgetClaimTest.php, tests/src/Functional/StockWidgetsFormTest.php'
+      - 'decisions.md: "A widget is chosen by the key''s schema"; "A structure may ask for its widget, and a widget never validates"'
+      - 'design-composition-vocabulary.md: widget layer stays SurfaceWidget plugins (decided by the user in that note)'
+      - 'module/docs/widgets.md; not marked experimental'
+    proposed: working
 
   # Resources and operations: ways in
   - slug: tool-api
@@ -211,14 +324,26 @@ topics:
     destination: core-4
     page: why/not-tool-api.md
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Tool (ToolDoors, InputDefinitions, OperationInputs); the door lives in the base module'
+      - 'Tests: tests/src/Kernel/OperationToolsTest.php, ToolDoorRunnerTest.php, ToolFeedbackTest.php, ToolResultShapeTest.php, WithoutToolModuleTest.php'
+      - 'decisions.md: "Identity before the parameters"; "A refusal names what it depends on"; "A read is an operation of the resource"; "Reading asks what writing asks"'
+      - 'Tool door kept in the base module when surface_http was split out (architecture audit, slice 10; user''s go); module/docs/tools.md'
+      - 'Not marked experimental; page docs/why/not-tool-api.md'
+    proposed: working
   - slug: http
     title: HTTP and OpenAPI
     package: resources
     destination: later
     page: path/stays-in-poc.md#http
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/modules/surface_http, module/modules/surface_openapi'
+      - 'Tests: tests/src/Functional/VenueApiTest.php, tests/src/Kernel/WithoutHttpModuleTest.php, InstallHttpAndOpenApiUpdateTest.php, tests/src/Traits/ServedApiTrait.php'
+      - 'decisions.md: "Two documents, never stricter than the runtime"; "One result at every door"; "Every door projects what the read tool projects"'
+      - 'Split into submodules as slice 10 of the architecture audit, on the user''s go; module/docs/installation.md'
+      - 'The base is experimental overall; this door is not flagged separately'
+    proposed: working
 
   # Stays in the proof of concept
   - slug: staging
@@ -227,21 +352,39 @@ topics:
     destination: poc
     page: path/stays-in-poc.md#staging
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Staging, module/src/Resource/StageResource.php, module/src/Form/CompiledFlow.php, module/src/Structure/StageChangesStructure.php'
+      - 'Tests: tests/src/Kernel/StageApplyTest.php, StageStoreTest.php, StagedCreateTest.php, StagedDeleteTest.php, FlowClassTest.php, tests/src/Functional/FlowRoundTripTest.php'
+      - 'decisions.md: "A stage is a resource of the base module, kept in an expirable key-value collection"; "A staged write validates as a real write"; "A flow is a class, and the map is its short form"; "One store contract; a stage''s lifetime is data on its record"'
+      - 'design-stage-v2.md: the maintainer accepted all 15 recommended answers 2026-11-07 and asked for slices 7 to 9'
+      - 'Marked experimental: module/docs/staging.md and glossary "Stage", "Staged write"; heavily tested, but experimental caps it at sketch'
+    proposed: sketch
   - slug: react
     title: A React package
     package: poc
     destination: poc
     page: path/stays-in-poc.md#react
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/modules/surface_examples_react, module/js'
+      - 'Tests: tests/src/Kernel/ReactStageTest.php, ReactFixturesTest.php, ReactRoutePageTest.php, tests/src/FunctionalJavascript/ReactStageJsTest.php, ReactNarrowingTest.php'
+      - 'decisions.md: no heading of its own; see "A stage is a resource of the base module..." for the stage it drives'
+      - 'Marked experimental: "the experimental submodule surface_examples_react" (module/docs/served-contract.md)'
+      - 'An example client, built in slice 6 of the stage work (design-stage-v2.md question 40)'
+    proposed: sketch
   - slug: generator
     title: Generating a resource from what exists
     package: poc
     destination: poc
     page: path/stays-in-poc.md#generator
     maturity: null
-    proposed: null
+    evidence:
+      - 'Code: module/src/Drush/Generators/ResourceGenerator.php, module/src/Drush/Generators/Resource, templates'
+      - 'Tests: tests/src/Kernel/ResourceGeneratorTest.php, ResourceGeneratorPathautoTest.php, tests/src/Unit/ExampleFilesTest.php'
+      - 'decisions.md: "The generator writes what the first page shows"; "Derived definitions at discovery"'
+      - 'Marked experimental: module/docs/generating.md ("Generating a resource (the drush generator)")'
+      - 'Door corpus rows digest its output (decisions-tonight-2026-11-17.md), so output changes move fixtures'
+    proposed: sketch
 
   # Open questions
   - slug: owner-rule-changes
@@ -250,18 +393,33 @@ topics:
     destination: open
     page: open/index.md#owner-rules
     maturity: question
-    proposed: null
+    evidence:
+      - 'Open in decisions.md: "Adding a key twice"; "An alter may answer access, and the stricter stands" show only today''s narrowing-only practice'
+      - 'Recorded as open: "may an alter change an owner''s rule" waits for the contrib alter survey (memory: alter-keys-placement-2026-11-12)'
+      - 'Not built as a general rule; tests only pin never-stricter narrowing: tests/src/Kernel/DeclaredNarrowingTest.php'
+      - 'module/docs/audit-never-stricter.md'
+    proposed: question
   - slug: entries-in-owner-list
     title: Entries a module adds inside a list its owner stores
     package: questions
     destination: open
     page: open/index.md#entries
     maturity: question
-    proposed: null
+    evidence:
+      - 'decisions.md: "Two identity-less entries of one storage class are one thing"; "Ports on an entry" (owner, 2026-10-21) cover entries of a module''s own list only'
+      - 'module/src/Entries.php, module/src/Entry.php, module/src/Port.php handle the module''s own entries'
+      - 'Tests: tests/src/Unit/EntriesTest.php, EntryTest.php, tests/src/Kernel/EntryPortsTest.php (own entries only)'
+      - 'No design for adding entries inside a list another module stores; core-gaps.md Step 3 does not draft it'
+    proposed: question
   - slug: observability
     title: Recording who ran what
     package: questions
     destination: open
     page: open/index.md#observability
     maturity: question
-    proposed: null
+    evidence:
+      - 'No source directory, test or decisions.md heading mentions recording who ran what'
+      - 'The module''s nearest facts are result codes and refusals: module/src/Operation/Refusal.php, decisions.md "One result at every door"'
+      - 'Not in module/ROADMAP.md or evolution.md'
+      - 'A stated question only'
+    proposed: question
