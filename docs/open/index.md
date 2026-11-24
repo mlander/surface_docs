@@ -8,7 +8,7 @@ Most of what is missing can be said with plain JSON Schema keywords core's outpu
 
 ## Where the parts land {#where-the-parts-land}
 
-Which parts go into an existing core subsystem directly, which start as an experimental module, and under which names. What is new should stay small, and core's existing APIs should read from it.
+Which parts go into an existing core subsystem directly, which start as an experimental module ([experimental policy](https://www.drupal.org/about/core/policies/core-change-policies/experimental/policy-and-list)), and under which names. What is new should stay small, and core's existing APIs should read from it.
 
 ## Rules that depend on current values {#current-values}
 

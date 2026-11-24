@@ -4,11 +4,11 @@ Nothing is forced on a contributed module. No API is removed or deprecated, stor
 
 ## Three rules at every step
 
-- **Each step only adds.** No step removes or deprecates an API, and existing calls keep their signatures.
+- **New pieces sit beside existing APIs.** No step removes or deprecates an API, and existing calls keep their signatures. A minor release may add APIs that keep backward compatibility ([allowed changes](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#s-apis)).
 - **Stored config does not change.** Adopting needs no update path and leaves a config export as it was.
 - **Only the new way in is strict.** `Config::save()`, a config action and a hand-written form behave as they do today. The new checks apply to a write made through an operation.
 
-What is new carries no stability promise until core gives it one, as with any experimental code in core. A module adopts when it chooses. [Release fit](../path/release-fit.md) checks each kind of change against core's published policies.
+What is new carries no stability promise until core gives it one, as with any experimental code in core ([stability levels](https://www.drupal.org/about/core/policies/core-change-policies/experimental/policy-and-list)). A module adopts when it chooses. [Release fit](../path/release-fit.md) checks each kind of change against core's published policies.
 
 ## At each rung
 
@@ -52,7 +52,7 @@ Moved, it is a class that names the resource it adds to:
 
 Moved, the setting also reaches HTTP and the Tool API tool, which a form alter never does. The proof of concept records what a Tool API tool sees of each version. The tool read from the content type resource advertises the alter's settings and refuses a deadline of forty-five days. Tool Belt's content type tool, on the classic side, does not advertise them, and stores forty-five days without asking the schema that would refuse it ([the comparison](https://git.drupalcode.org/project/surface/-/blob/75a53469/modules/surface_examples_node_type_tool/COMPARISON.md)).
 
-This cost arrives one owner at a time, and only for owners who choose rung 3. Core's [frontend backward compatibility policy](https://www.drupal.org/about/core/policies/core-change-policies/frontend-bc-policy) already allows it: the Form API is stable, the structure of a given form is not, and a minor release may change it. Core would move its own forms one at a time, never in bulk.
+This cost arrives one owner at a time, and only for owners who choose rung 3. Core's policy already allows it. The Render and Form APIs are stable, while render arrays, form arrays included, are not ([frontend backward compatibility](https://www.drupal.org/about/core/policies/core-change-policies/frontend-bc-policy#render-arrays)), and a minor release may change them ([allowed changes](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#s-functionality-and-frontend)). The policies do not name form IDs. Core would move its own forms one at a time, never in bulk.
 
 ### A module that writes another module's config
 
