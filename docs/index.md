@@ -10,29 +10,35 @@ A module describes its data once. The form, the validation, the Tool API tool, t
 
 Three concepts carry it:
 
-- **[Structures](path/structures.md).** The description of a thing's data: each key, its type, its choices and its rules. Most structures are read from the config schema and field definitions a module already has.
-- **[Resources and their operations](path/resources-operations.md).** The thing itself, where it is stored and who may change it, and the named actions on it, such as "update the site information" or "place a block".
-- **[Portable Schema](path/portable-schema.md).** How a structure is written down and served: JSON Schema, with a small agreed set of extension keywords.
+- **[Structures](path/structures.md).** The description of a thing's data: each key, its type, its choices and its rules. Most structures are read from the config schema and field definitions a module already has. A structure has no actions of its own. A block plugin's settings, a field type's settings and a condition plugin's settings are structures: data shapes that something else stores and acts on.
+- **[Resources and their operations](path/resources-operations.md).** A resource is a structure with identity, storage and permissions, and the named actions on it, such as "update the site information" or "place a block". A config object, a placed block and a content type are resources. Each operation is one action, with its input, its permission and its checks.
+- **[Portable Schema](path/portable-schema.md).** How structures and resources are written down and served: JSON Schema, with a small agreed set of extension keywords. It is a library that does not depend on Drupal, with validators in PHP and JavaScript that give the same answers. A resource's operation input and a plugin's settings are described in the same way.
 
-## An evolution, not a new system beside Drupal
+## Add it once, beside what exists
+
+The ask is to add the description once. Everything else reads from it.
 
 - **Nothing changes until a module chooses.** Existing config schema and field definitions are read as they are. A block that has only config schema can already be placed through a resource.
 - **The first step is small.** A module adds one resource class beside its existing form. The form keeps working. Stored config does not change.
-- **Each step only adds.** No API is removed or deprecated. Each change on the path is sized for a [minor release](path/release-fit.md).
-- **Generated forms come last, and only where wanted.** A module may replace its hand-written form with one read from the description, at its own pace, or never.
+- **New pieces sit beside existing APIs.** Nothing is removed or deprecated to make room. Each change is sized for a [minor release](path/release-fit.md). Once the new pieces are in use, older ones can be deprecated gracefully on core's usual schedule.
+- **Forms follow when wanted.** A module may replace its hand-written form with one read from the description, at its own pace, or never. Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
 
 It builds on what core has: constraint plugins, JSON Schema, `#config_target`, Form API elements, entity storage and access. A plugin is still a plugin, an entity is still an entity, config is still config.
 
+## Why not more Tool API tools?
+
+Core could add a Tool API tool for each action on each thing. One thing would then have several tools, each in its own file with its own input, and an alter would have to find and change each one. Or core could add one resource with its operations, and every operation is published as a Tool API tool. The tools come from the description, and so do the form's checks and the HTTP call. [Why not Tool API?](why/not-tool-api.md) compares the two.
+
 ## Where to go next
 
+- **[Why not Tool API?](why/not-tool-api.md)** Tool API has a role in this. Surface takes its idea one step further.
 - **[See it on real code](adopting/index.md).** Placing a block, the site information settings, and field settings as Tool API tools, each as a small change beside what exists.
-- **[Why not Tool API?](why/not-tool-api.md)** It has a role in this. Surface takes its idea one step further.
 - **[The path into core](path/index.md).** How the proof of concept is split into pieces core can review, and how each is validated.
-- **[The board](board.md).** Every talking point, how solid it is, and where help is needed.
+- **[The board](board.md).** Every talking point, how mature it is, and where help is needed.
 
 ## How to read this site
 
-A lot of thought has gone into this, and the pages say what was decided and why. There is also plenty of room to improve it. Each page says what is still open, and [Proposing a change](open/proposing-a-change.md) says how to revisit something already decided. Some parts are settled after long design work; others are first sketches. Each talking point carries [a maturity level](about/maturity.md) so you know which is which.
+Everything here is open to discussion. A lot of thought has gone into it. The proof of concept has ports of real contributed modules, a test suite, and a written record of each decision with the reason it was made. The pages link to those records. Some parts are more mature than others, and each talking point carries [a maturity level](about/maturity.md) so you can tell which. Every part can still be improved. [Proposing a change](open/proposing-a-change.md) says how to revisit something already decided.
 
 The work is done in the [Surface API proof of concept](https://www.drupal.org/project/surface). It is on drupal.org for its issue queue and repository while it is prototyped, and will have no full release. The goal is for its parts to move into core once they are ready.
 

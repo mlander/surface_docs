@@ -15,6 +15,6 @@ A form is one way to run an action. Without a description of the action, nothing
 
 An operation states the keys it takes, the permission it needs and how its input maps to what is stored. A form, a Tool API tool and an HTTP call are then each one way to run it, with the same validation. Config schema stays the source of the keys' types and labels where it is enough, which for most static settings it is.
 
-## And forms come last
+## And forms when wanted
 
-Generating a form is the last step on the path and the last rung of [the adoption ladder](../adopting/index.md). A module gets everything else first: one validation for every way in, a Tool API tool, a published description. Replacing its hand-written form is optional, and happens at its own pace.
+A module gets the rest first: one validation for every way in, a Tool API tool, a published description. Replacing its hand-written form with one read from the description is optional, and happens at its own pace ([the adoption ladder](../adopting/index.md)).

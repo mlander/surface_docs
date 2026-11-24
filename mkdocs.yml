@@ -39,6 +39,7 @@ extra_css:
 
 markdown_extensions:
   - admonition
+  - footnotes
   - attr_list
   - md_in_html
   - tables
@@ -61,8 +62,8 @@ nav:
   - Home: index.md
   - Why:
       - why/index.md
-      - One more description: why/one-more-description.md
       - Why not Tool API: why/not-tool-api.md
+      - One more description: why/one-more-description.md
       - Why not forms from config schema: why/not-config-schema-forms.md
       - What it builds on: why/builds-on.md
       - What it could consolidate: why/consolidates.md

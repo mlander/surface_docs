@@ -52,7 +52,7 @@ Storage stays where it is. A storage class loads, prepares and commits: a simple
 
 ## Forms
 
-A form is one way to run an operation. A hand-written form can keep running it, and can read one more fact at a time from the description: `#options` from a labeled `Choice`, a key disabled where access locks it. Generated forms come last and are optional: one generic form per operation, built from Form API elements. They are the last rung a module climbs, at its own pace, or never ([the adoption ladder](../adopting/index.md)).
+A form is one way to run an operation. A hand-written form can keep running it, and can read one more fact at a time from the description: `#options` from a labeled `Choice`, a key disabled where access locks it. Generated forms are optional: one generic form per operation, built from Form API elements. A module adopts one at its own pace, or never ([the adoption ladder](../adopting/index.md)).
 
 Two things in Form API work against a generated form today, and step 5 is where they would change: `#states` and an element's own checks run apart from the definition's rules, and a form keeps only the first error per element; and an element does not read its own value back in the shape its definition describes. The proof of concept clears the element's server-side check and keeps its limits as browser hints, so the rule's own message is the one shown ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#an-element-hints-and-the-rule-speaks)).
 
