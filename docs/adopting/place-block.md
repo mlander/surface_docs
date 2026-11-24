@@ -95,7 +95,7 @@ and names it on the plugin class:
 --8<-- "modules/surface_examples_component_block/src/Plugin/Block/ComponentBlock.php:26:31"
 ```
 
-That is rung 2 for a block: one structure class (53 lines, 22 code lines) and one attribute on the plugin, which extends `TypedBlockBase`. The placement resource places it with no code added for it ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-block-embeds-a-component-through-its-structure)). The component block was written for the proof of concept, so it has no "before" to compare with. Its config schema stays hand-written.
+That is rung 2 for a block: one structure class (53 lines, 22 code lines) and one attribute on the plugin, which extends `TypedBlockBase`. The placement resource places it with no code added for it ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-block-embeds-a-component-through-its-structure)). The component block was written for the proof of concept, so it has no "before" to compare with. Its config schema stays hand-written.
 
 ## What it gets
 
@@ -117,7 +117,7 @@ The tests: `BlockPlacementToolsTest`, `BlockPlacementApiTest`, `BlockPlacementFo
 
 - **Rung 2 for the branding block.** Declaring its structure would carry the form's labels and descriptions to every caller. For three booleans whose rules config schema already states, that is not worth much. Reading the config schema can stay the source for good.
 - **Rung 3 for the block layout.** Pointing core's block form route at the operation's form is possible, but it is not proposed here. Two things stand in the way: a plugin that reads a context, such as the node of the page, is not offered yet, and a block cannot move between themes through the update operation.
-- **Rung 4 for a block plugin.** A block that declares its structure no longer needs `defaultConfiguration()`, `blockForm()`, `blockValidate()` or `blockSubmit()`. The proof of concept keeps one block written both ways, [`surface_examples_classic`](https://git.drupalcode.org/project/surface/-/blob/75a53469/modules/surface_examples_classic/README.md), and a test holds the two to the same behavior.
+- **Rung 4 for a block plugin.** A block that declares its structure no longer needs `defaultConfiguration()`, `blockForm()`, `blockValidate()` or `blockSubmit()`. The proof of concept keeps one block written both ways, [`surface_examples_classic`](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/modules/surface_examples_classic/README.md), and a test holds the two to the same behavior.
 
 ## Another module's view
 
@@ -147,7 +147,7 @@ Not yet in the proof of concept: an alter of a block whose structure is read fro
 - Layout Builder's components are not placements.
 - Without JavaScript, the generated create form draws a plugin's settings only after the plugin is chosen.
 
-Each choice and the alternatives set aside are recorded in [A placed block is a resource](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-placed-block-is-a-resource).
+Each choice and the alternatives set aside are recorded in [A placed block is a resource](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-placed-block-is-a-resource).
 
 ## Try it
 
@@ -161,6 +161,6 @@ Place a component block in Olivero's sidebar as a dry run:
 --8<-- "modules/surface_examples_block/README.md:106:106"
 ```
 
-Open `/admin/structure/block/surface/add`, choose **Site branding**, and its three settings are drawn from its config schema. The module's [README](https://git.drupalcode.org/project/surface/-/blob/75a53469/modules/surface_examples_block/README.md) lists every route, tool and test.
+Open `/admin/structure/block/surface/add`, choose **Site branding**, and its three settings are drawn from its config schema. The module's [README](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/modules/surface_examples_block/README.md) lists every route, tool and test.
 
 [^branding]: Counted in Drupal core 11.4, `core/modules/system`. A place counts when it states the type, the label, the default, the allowed values or a rule. `blockSubmit()` copies the three values into the configuration and states nothing about them, so it is not counted.

@@ -10,7 +10,7 @@ Portable Schema is how a structure is written down and served. It is JSON Schema
 
 A client that wants to send a valid write learns the rules before it sends, instead of by being refused. Today the serialization module's JSON Schema describes what a normalizer outputs, and nothing describes what an operation on a config object or an entity accepts.
 
-[Step 4](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/core-gaps.md#step-4-a-served-contract): for an operation from step 2, compose a schema of what it accepts from the definitions that [step 1](groundwork.md) enriched, and serve it beside the operation, with the rule and the tests that it is never stricter than validation. Not drafted as one issue: its parts are step 1's, starting with constraints as keywords, [#3627330](https://www.drupal.org/project/drupal/issues/3627330).
+[Step 4](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/core-gaps.md#step-4-a-served-contract): for an operation from step 2, compose a schema of what it accepts from the definitions that [step 1](groundwork.md) enriched, and serve it beside the operation, with the rule and the tests that it is never stricter than validation. Not drafted as one issue: its parts are step 1's, starting with constraints as keywords, [#3627330](https://www.drupal.org/project/drupal/issues/3627330).
 
 ## Served
 
@@ -22,9 +22,9 @@ Every document the proof of concept serves is a Portable Schema document. For th
 
 The excerpt leaves out the document's `$schema` and the member that states the contract version and the operation's id and kind. The file is a committed baseline, and the test suite fails on a breaking change to it.
 
-The served contract is never stricter than the validation that judges the write. What validation accepts, the schema accepts, judged on the values after coercion (a form's `"50"` for an integer becomes `50` first). Where a rule cannot be stated, the schema stays at the declared width and says so: a constraint with no keyword is named under `portable-check`, and a rule that reads site state is marked as settled by the server. Matrix tests run each example's accepted and refused values through validation and through both documents with a standard validator ([Never stricter than the runtime](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/served-contract.md#never-stricter-than-the-runtime)).
+The served contract is never stricter than the validation that judges the write. What validation accepts, the schema accepts, judged on the values after coercion (a form's `"50"` for an integer becomes `50` first). Where a rule cannot be stated, the schema stays at the declared width and says so: a constraint with no keyword is named under `portable-check`, and a rule that reads site state is marked as settled by the server. Matrix tests run each example's accepted and refused values through validation and through both documents with a standard validator ([Never stricter than the runtime](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/served-contract.md#never-stricter-than-the-runtime)).
 
-There are two documents, by one code path ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#two-documents-never-stricter-than-the-runtime)):
+There are two documents, by one code path ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#two-documents-never-stricter-than-the-runtime)):
 
 - **The schema for these answers**, for one set of values: each list narrowed for the sibling values as they stand. A form is drawn from it.
 - **The full schema**, which reads no value and holds for any: every dependency that can be listed is written as `if`/`then`. A validator, or an agent planning its values, reads this one. The store location's region, for the first of its two countries:
@@ -48,7 +48,7 @@ A small set needs extension keywords:
 | Hints for drawing a form | `x-portable-ui`: the widget, placeholder, grouping and weight. Written only when a caller asks, so the contract names no widget. |
 | Where to ask the server for what the document leaves out | `x-portable-links`: an entity lookup, or one entry of a long list |
 
-Portable Schema is by fago: a dialect of JSON Schema 2020-12 with reference validators in PHP and JavaScript that pass one set of conformance fixtures. Its `x-` keywords are annotations only, an unknown keyword is an error, and `format` is asserted. What the proof of concept still writes under its own `x-surface` (which keys a key depends on, and its markers) is expected to move into the dialect's keywords in later contract versions ([Contract 5](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/served-contract.md#contract-5)).
+Portable Schema is by fago: a dialect of JSON Schema 2020-12 with reference validators in PHP and JavaScript that pass one set of conformance fixtures. Its `x-` keywords are annotations only, an unknown keyword is an error, and `format` is asserted. What the proof of concept still writes under its own `x-surface` (which keys a key depends on, and its markers) is expected to move into the dialect's keywords in later contract versions ([Contract 5](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/served-contract.md#contract-5)).
 
 The schema language for core is an [open question](../open/index.md#schema-language).
 
@@ -62,10 +62,10 @@ The schema language for core is an [open question](../open/index.md#schema-langu
 ## Considered and set aside
 
 - **One document for both uses.** Merged, it would make a drawing client evaluate conditionals to learn what a select offers; kept alone, it is true of one set of values only.
-- **An OpenAPI `discriminator` for a group of keys chosen by a sibling.** A discriminator names a property inside the object it picks between, and here the deciding key is a sibling ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#no-openapi-discriminator-for-variants)).
-- **Widget names in the contract.** They are hints a renderer asks for, under `x-portable-ui` ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#the-ui-hints-are-x-portable-ui)).
-- **Every `Regex` as `pattern`, and `idn-email`.** PHP and JavaScript read some pattern constructs and international email addresses differently, so those are checked on the server only ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-pattern-both-engines-read-alike)).
-- **A keyword vocabulary of the proof of concept's own.** Since contract 5 the served document is a Portable Schema document, and the proof of concept's own keywords moved into the dialect's ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#the-served-document-is-a-portable-schema-document)).
+- **An OpenAPI `discriminator` for a group of keys chosen by a sibling.** A discriminator names a property inside the object it picks between, and here the deciding key is a sibling ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#no-openapi-discriminator-for-variants)).
+- **Widget names in the contract.** They are hints a renderer asks for, under `x-portable-ui` ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#the-ui-hints-are-x-portable-ui)).
+- **Every `Regex` as `pattern`, and `idn-email`.** PHP and JavaScript read some pattern constructs and international email addresses differently, so those are checked on the server only ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-pattern-both-engines-read-alike)).
+- **A keyword vocabulary of the proof of concept's own.** Since contract 5 the served document is a Portable Schema document, and the proof of concept's own keywords moved into the dialect's ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#the-served-document-is-a-portable-schema-document)).
 
 ## Open to improve
 

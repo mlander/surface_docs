@@ -85,7 +85,7 @@ topics:
       - 'Code: module/src/Structure, module/src/Contract/Schemas.php, module/src/SurfaceBuilder.php, module/src/Resource/StructureInterface.php'
       - 'Tests: tests/src/Kernel/SurfaceBuilderTest.php, SchemaRoundTripTest.php, ShapesTest.php, AttachedStructureTest.php, EmptyStructureTest.php'
       - 'decisions.md: "A shape is a named definition"; "A blueprint takes no complex data types" (decided 2026-11-01, by the maintainer); "The surface was counted and cut" (decided 2026-10-24, by the owner)'
-      - 'Rename "node" to "schema" approved by the user 2026-11-16 (drupal_7_13/design-schema-as-model.md); series landed on 1.0.x 75a53469'
+      - 'Rename "node" to "schema" approved by the user 2026-11-16 (drupal_7_13/design-schema-as-model.md); series landed on 1.0.x d5486fd4'
       - 'Not marked experimental as a whole'
     proposed: settled
   - slug: reading-config-schema
@@ -98,6 +98,7 @@ topics:
       - 'Code: module/src/Reader/ConfigSchemaReader.php, module/src/Variants/ConfigSchemaTypes.php'
       - 'Tests: tests/src/Kernel/ConfigSchemaReaderTest.php, ConfigSchemaTypesTest.php, ConfigSchemaCensusTest.php, ConfigSchemaDriftTest.php'
       - 'decisions.md: "The remaining readers read schemas"; "A mixin may be chosen by a sibling key" (decided 2026-11-05, by the maintainer)'
+      - 'decisions.md: "A config object''s keys are read from its config schema by default" (2026-11-24, on the owner''s request); fromConfigSchema() on BlueprintInterface; tests SiteInformationSurfaceTest, PerformanceSurfaceTest'
       - 'Marked experimental: module/docs/reading-a-schema.md and glossary "Reader", "Open"'
       - 'Tested widely, but the docs call the idea one of the module''s bolder ideas, so it stays at sketch'
     proposed: sketch

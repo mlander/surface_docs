@@ -2,7 +2,7 @@
 
 Every piece is validated the same way:
 
-1. **Retrofit a fixed set of real cases.** Each case is code that exists in core or a contributed module, from the proof of concept's [adoption page](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/adoption.md), which groups core's forms A to H by the shape of their settings. The original module stays untouched; the retrofit is added beside it.
+1. **Retrofit a fixed set of real cases.** Each case is code that exists in core or a contributed module, from the proof of concept's [adoption page](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/adoption.md), which groups core's forms A to H by the shape of their settings. The original module stays untouched; the retrofit is added beside it.
 2. **Measure.** Files and lines added and removed; the number of places the same data is described, before and after; whether a config export changes (it must not); and whether one refused value is refused with the same message from the form, the Tool API tool, Drush and HTTP.
 3. **Ask the subsystem's maintainers to review.** The maintainers of the subsystem the piece changes, as core's `MAINTAINERS.txt` lists them.
 
@@ -21,7 +21,7 @@ A piece is ready when its cases pass and its maintainers have reviewed it. The c
 | G | Field widgets collecting content | Designed, not built. |
 | H | Views plugins, menu link forms, image toolkits, Migrate, inline blocks | Out of scope for now. |
 
-Two contributed settings forms were also ported outside the proof of concept's repository, with both originals untouched: Honeypot's and Pathauto's ([the log](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/adopters-2026-10-19.md)).
+Two contributed settings forms were also ported outside the proof of concept's repository, with both originals untouched: Honeypot's and Pathauto's ([the log](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/adopters-2026-10-19.md)).
 
 ## Cases per piece
 
@@ -46,7 +46,7 @@ Two contributed settings forms were also ported outside the proof of concept's r
 ### Resources and operations {#resources-and-operations}
 
 - The content type create and update operations, and a placed block (group E).
-- Simple config: the first example's settings and `system.performance` (group F); a core settings form with `#config_target` is the next case.
+- Simple config: the first example's settings, `system.site` with every key read from config schema, and `system.performance` (group F); a core settings form with `#config_target` is the next case.
 - Honeypot's three form-only validation rules and its permission, held at every way in.
 - Generated forms: the same cases drawn with no form class (groups D and E).
 

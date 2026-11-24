@@ -12,7 +12,7 @@ The proof of concept works from end to end, but core does not take it as one pie
 | [Portable Schema](portable-schema.md) | How a structure is written down and served: JSON Schema, with a small agreed set of extension keywords. | Step 4, with the keywords of step 1 | The plain JSON Schema keywords are not expected to change. The extension keywords and the dialect are open. |
 | [Stays in the proof of concept](stays-in-poc.md) | HTTP and OpenAPI, staged edits, a React client, a generator. | None | Not proposed now. |
 
-The steps are the ones in the proof of concept's [core gaps](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/core-gaps.md#the-order), in that order:
+The steps are the ones in the proof of concept's [core gaps](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/core-gaps.md#the-order), in that order:
 
 1. **Facts on a data definition.** Small changes to Typed Data, validation and the Field API, and one to the coding standards.
 2. **Operations and access for simple config.** A config object gets named operations, a permission each, and access per key, as entity types have.
@@ -37,6 +37,6 @@ Three step 1 issues are open in core's queue: [#3620920](https://www.drupal.org/
 
 ## What the proof of concept is evidence for
 
-It shows that the definitions core already has, plus the facts of step 1, are enough to state a settings object's rules once and hold a form, a Tool API tool, an HTTP API and a schema to them. It does not show that this order is the only one, that its PHP API is the one core should adopt, or that content entities fit the same way. Its entity side is paused ([core gaps](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/core-gaps.md#what-this-module-is-evidence-for-and-what-it-is-not)).
+It shows that the definitions core already has, plus the facts of step 1, are enough to state a settings object's rules once and hold a form, a Tool API tool, an HTTP API and a schema to them. It does not show that this order is the only one, that its PHP API is the one core should adopt, or that content entities fit the same way. Its entity side is paused ([core gaps](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/core-gaps.md#what-this-module-is-evidence-for-and-what-it-is-not)).
 
 Where the pieces land in core, and under which names, is an [open question](../open/index.md#where-the-parts-land). Whether each fits a minor release is checked on [Release fit](release-fit.md).
