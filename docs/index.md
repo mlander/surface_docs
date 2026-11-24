@@ -21,7 +21,7 @@ The ask is to add the description once. Everything else reads from it.
 - **Nothing changes until a module chooses.** Existing config schema and field definitions are read as they are. A block that has only config schema can already be placed through a resource.
 - **The first step is small.** A module adds one resource class beside its existing form. The form keeps working. Stored config does not change.
 - **New pieces sit beside existing APIs.** Nothing is removed or deprecated to make room. Each change is sized for a [minor release](path/release-fit.md). Once the new pieces are in use, older ones can be deprecated gracefully on core's usual schedule.
-- **Forms follow when wanted.** A module may replace its hand-written form with one read from the description, at its own pace, or never. Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
+- **Forms follow when wanted.** A module may replace its hand-written form with one read from the description, at its own pace, or never. A generated form handles complex forms out of the box: grouped keys, keys that depend on another key's value, and forms in several steps. Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
 
 The first change is a new input layer beside forms. It describes each action's input once, and Tool API tools, Drush, recipes and HTTP clients read it. A form can read from the same layer right away, or later at its own pace.
 
@@ -30,6 +30,7 @@ It builds on what core has: constraint plugins, JSON Schema, `#config_target`, F
 - **Plugins, entities and config.** A plugin is still a plugin, an entity is still an entity, config is still config. Config storage, export and import work as they do today, and stored data does not change.
 - **Routing and controllers.** Existing routes and controllers are untouched. A module adds a route only if it wants a generated form at a second path.
 - **Permissions.** An operation names a permission that already exists. None are created.
+- **Form API.** A generated form is built from Form API elements. Cosmetic overrides stay in Form API: a module changes how a generated form looks with `hook_form_alter()` or a small class that alters its render array, never what a value means.
 - **Field widgets.** They are not changed.
 
 ## Why not more Tool API tools?
