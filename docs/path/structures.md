@@ -18,6 +18,8 @@ Where a structure lives in core, and under which name, is [open](../open/index.m
 
 The default, and a permanent one. A config schema type is read into a structure as it is: a mapping becomes a group of keys, a sequence a list, and a type named through a sibling key (`[%parent.plugin]`) becomes keys that depend on that sibling. The module writes nothing and changes nothing. A block that has only config schema can already be placed through a resource this way, its plugin's defaults laid over the schema (`BlockPluginStructures` in `surface_examples_block`). A module whose rules fit config schema may keep config schema as the source for good.
 
+For a simple config object, an operation names the keys it takes and their structure is read from config schema ([step 2](resources-operations.md#keys)). A key config schema cannot describe fully is declared in code beside the names, and checked against the schema.
+
 What the module has: `Reader\ConfigSchemaReader` ([Reading a schema](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/reading-a-schema.md#config-schema)).
 
 ### Read from field definitions
@@ -86,7 +88,7 @@ Not built. Adding keys changes the owner's endpoints: a cached schema goes stale
 
 ## Considered and set aside
 
-- **Copying a config object's keys from its schema into a class.** Each key would be written twice. A module keeps config schema as the source, or declares in code and generates the schema ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-config-object-is-described-by-its-resource)).
+- **Copying a config object's keys from its schema into a class.** Each key would be written twice. An operation names the keys and reads them; only a key config schema cannot describe is declared. A module that owns its config object may instead declare every key and generate the schema ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-config-object-is-described-by-its-resource)).
 - **A constraint of the author's own first.** A keyword is read by every client, a constraint with no keyword only by the server. The order is a keyword, then a list the site decides, then code ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-rule-is-a-keyword-first-a-list-second-code-last)).
 - **Every Typed Data type.** Types a JSON Schema document cannot state (`binary`, `language`, `any`) are refused, so the schema is exactly as wide as what validation accepts ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#one-table-of-leaf-types-read-by-the-blueprint-the-emitter-and-the-reader)).
 - **Declarations that read services or site state.** A declaration is static, so it takes no values and can be read without building anything; a rule that reads the site is marked as settled at run time ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-resource-or-structure-is-static)).

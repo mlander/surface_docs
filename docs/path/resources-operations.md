@@ -10,7 +10,19 @@ A resource is a thing with identity and storage: a config object, a config entit
 
 Entity types already have operations, access per field and validation on write, so a resource is derived for each one today. A simple config object has none of it: a `ConfigFormBase` subclass and a route with `_permission`, and `Config::save()` casts values without checking a constraint. A Drush command, a config action, a REST endpoint or an agent that writes a settings object asks no permission and runs no validation unless its author wrote them.
 
-[Step 2](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/core-gaps.md#step-2-operations-and-access-for-simple-config): a simple config object may name its operations, each with a permission, and an optional access handler that answers per key, as `fieldAccess()` does per field. A write through an operation validates against the config schema before it saves. Not drafted as an issue. Generated forms are [step 5](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/core-gaps.md#step-5-form-api-last).
+[Step 2](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/core-gaps.md#step-2-operations-and-access-for-simple-config): a simple config object may name its operations, each with a permission, and an optional access handler that answers per key, as `fieldAccess()` does per field. A write through an operation validates against the config schema before it saves. Not drafted as an issue.
+
+### Where an operation's keys come from {#keys}
+
+The proposal for step 2:
+
+- **Read by default.** An operation names the keys it takes. Each key's type, label and constraints are read from the config object's existing schema. Config schema is not changed, and neither are config import validation, config translation or typed config, which read it.
+- **Declared where config schema cannot say enough.** A fixed list of choices with labels, a rule that depends on the site, a comparison between two keys, or input that is never stored. The declared key is checked against the config schema at its path, so it can only narrow what config schema allows.
+- **Generated only on opt-in.** A module that owns its config object and declares its keys may write its config schema from them with a build-time command. The file is committed, and a test fails when the two drift. Core reads an ordinary config schema file either way, so step 2 does not need the generator.
+
+For core's `system.site`, rung 1 is then six key names and a permission. The cost is the labels: config schema's are short ("Max age") where a form's titles are fuller, so a Tool API tool shows the shorter ones until the module declares the key.
+
+Not yet in the proof of concept: naming keys and reading the rest. Today a resource over a config object declares each key it takes, and is checked against the config schema core wrote or generates its own ([decision](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/decisions.md#a-config-object-is-described-by-its-resource)). That decision becomes the opt-in above. Generated forms are [step 5](https://git.drupalcode.org/project/surface/-/blob/75a53469/docs/core-gaps.md#step-5-form-api-last).
 
 ## Operations
 
@@ -52,6 +64,8 @@ Field widgets are not changed. A generated form draws each key with its own smal
 
 ## Considered and set aside
 
+- **Declaring every key in code as the default.** Each key core's config schema already describes would be written a second time, and rung 1 would be a class of key declarations instead of a list of names.
+- **Generating config schema as the default.** Two files could describe one object during the transition, and core would need a rule for which one wins.
 - **A new permission per operation.** It would grow the permissions list and leave the existing route permission and the new one to disagree.
 - **Copying another thing's access check** ("has edit any page content"). It agrees with the owner's answer only until a module that changes access is enabled.
 - **Mapping a form element's error back to the rule's message.** That keeps two checks that can disagree.
