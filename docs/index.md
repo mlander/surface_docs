@@ -23,7 +23,14 @@ The ask is to add the description once. Everything else reads from it.
 - **New pieces sit beside existing APIs.** Nothing is removed or deprecated to make room. Each change is sized for a [minor release](path/release-fit.md). Once the new pieces are in use, older ones can be deprecated gracefully on core's usual schedule.
 - **Forms follow when wanted.** A module may replace its hand-written form with one read from the description, at its own pace, or never. Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
 
-It builds on what core has: constraint plugins, JSON Schema, `#config_target`, Form API elements, entity storage and access. A plugin is still a plugin, an entity is still an entity, config is still config.
+The first change is a new input layer beside forms. It describes each action's input once, and Tool API tools, Drush, recipes and HTTP clients read it. A form can read from the same layer right away, or later at its own pace.
+
+It builds on what core has: constraint plugins, JSON Schema, `#config_target`, Form API elements, entity storage and access. What it does not change:
+
+- **Plugins, entities and config.** A plugin is still a plugin, an entity is still an entity, config is still config. Config storage, export and import work as they do today, and stored data does not change.
+- **Routing and controllers.** Existing routes and controllers are untouched. A module adds a route only if it wants a generated form at a second path.
+- **Permissions.** An operation names a permission that already exists. None are created.
+- **Field widgets.** They are not changed.
 
 ## Why not more Tool API tools?
 
