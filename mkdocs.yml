@@ -80,7 +80,6 @@ nav:
       - Portable Schema: path/portable-schema.md
       - Groundwork in core: path/groundwork.md
       - Stays in the proof of concept: path/stays-in-poc.md
-      - How each piece is validated: path/validation.md
       - Release fit: path/release-fit.md
   - Board: board.md
   - Open questions:

@@ -76,7 +76,7 @@ The test is `SiteInformationSurfaceTest`. It checks the six keys against core's 
 
 ### The hand-written form keeps working
 
-Core's site information form at `/admin/config/system/site-information` is not touched. It saves through `Config::save()` as it does today, and it does not run the operation's checks. Only the new way in is strict: `Config::save()`, a config action and a hand-written form behave as they do today. A form that asks the operation without being generated is step 2's core change, and not yet in the proof of concept.
+Core's site information form at `/admin/config/system/site-information` is not touched. It saves through `Config::save()` as it does today, and it does not run the operation's checks. A form that asks the operation without being generated is step 2's core change, and not yet in the proof of concept.
 
 ## Declaring a key: `system.performance` {#declaring-a-key}
 
@@ -134,30 +134,6 @@ A maximum age of 120, which is not one of the 14 periods, is refused at `/max_ag
 A write sets each key at its path and keeps `css.compress`, `js.compress` and `fast_404` byte for byte. The test is `PerformanceSurfaceTest`. It runs the refusals through the Tool API tool. Over HTTP it checks only that the OpenAPI document describes the path and the list; a refusal over HTTP is not yet tested for this resource.
 
 A list of 14 integers is narrower than the schema's "any integer", so the declared key passes the check against core's config schema. A module that owns its config object may instead declare every key and generate its config schema from them (`drush surface:config-schema`), with a test that fails when the two drift. A resource with read keys is not generated from, so generating stays a choice the module makes ([A schema generated from the resource](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/storage.md#a-schema-generated-from-the-resource)).
-
-## Later, if ever
-
-- **Rung 2.** For `system.site`, the site name would be declared required, and the rule that a page exists and may be visited would be declared. The performance example is already at rung 2 for its maximum age.
-- **Rung 3.** Core's route would point at the operation's form. Whether that is worth a new form id for every module that alters the form is the owner's call ([What contrib sees](contrib.md)).
-- **Rung 4.** `SiteInformationForm` or `PerformanceForm` would go. Not proposed here.
-
-## Another module's view
-
-**Before.** A module that adds a setting to the site information page alters the form with `hook_form_alter()` and stores the value in a config object of its own. The setting is in no description of the page it appears on.
-
-**After.** Step 3 of the core path gives simple config the third-party settings place config entities have. A module's keys would then be stored with the object they configure, under `third_party_settings.<module>`, and checked by its schema. The proof of concept does this for config objects its examples own ([Keys another module mounts](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/storage.md#keys-another-module-mounts)). Not yet in the proof of concept: the same on a core config object such as `system.site`, whose schema has no such place today.
-
-## What stays as it is
-
-- Stored config. A write through the operation changes the keys it sends and nothing else. No update path, and a config export is unchanged.
-- Core's config schema for the object.
-- Core's form, its route and its permission. The permissions list does not grow: the operation names the permission the route already asks.
-
-## Open to improve
-
-- **Labels and descriptions for read keys.** A read key shows config schema's short label and no description until the module declares it. Whether a key can be read and given a label of its own, without being declared, is open.
-- **Email checked more strictly than core.** The portable `format: email` refuses addresses core's Email constraint accepts.
-- **A config object only a route guarded.** One rule keeps step 2 safe: it stays closed to every other caller until its owner names the permission. Core does not guess it. In the proof of concept a config object has no way in until a resource names an operation and its permission, and an operation whose access check gives no answer is refused ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#neutral-is-a-refusal-for-an-operations-caller)).
 
 ## Try it
 

@@ -4,72 +4,57 @@ topic: structure
 
 # Structures
 
-A structure is the description of a thing's data: each key, its type, its choices and its rules, with what a caller needs to send a valid value. A structure is declared in Portable Schema, or, until a module converts it, read from the config schema it already has. Core's common settings would be converted ahead of time, and reading is the bridge for the rest. A field's structure is read from its field definition, because fields are set up on each site.
-
-## What core gains, and the core change
-
-One description that a form, validation, a Tool API tool and an HTTP client all read, so they accept and refuse the same values. Reading needs no new system: it needs the facts of [step 1](groundwork.md) on the definitions core already builds. Another module's keys are [step 3](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/core-gaps.md#step-3-third-party-settings-for-simple-config): simple config gains the `third_party_settings` place config entities and `theme_settings` already have.
-
-Where a structure lives in core, and under which name, is [open](../open/index.md#where-the-parts-land).
+A structure describes a thing's data: each key, its type, its allowed values and its rules, with what a caller needs to send a valid value. A form, validation and a Tool API tool all read the same structure, so they accept and refuse the same values.
 
 ## How a structure is made
 
+A module declares in Portable Schema the keys it owns. Until it does, a structure is read from the definitions core already builds: config schema, and field definitions for fields. Reading needs no new system, only the facts of [step 1](groundwork.md).
+
 ### Declared in Portable Schema {#declared-in-code}
 
-This is how a module converts its settings, and how core's common settings forms would be converted ahead of time. Each key carries its title, description, default and checks, and rules that are code sit beside it: a list that depends on another key or on the site, a comparison between two keys, input that is never stored. The description and its logic then sit in one class and are checked together. A settings page's whole description:
+This is how a module converts its own settings, and how core's common settings forms would be converted ahead of time. Each key carries its title, description, default and checks, written with a builder that produces JSON Schema. The newsletter settings of the first example:
 
 ```php
 --8<-- "modules/surface_examples_first/src/Resource/NewsletterResource.php:37:63"
 ```
 
-Each key is a JSON Schema written with a builder. The class can generate the config object's schema and install file (`drush surface:config-schema`), and a test fails when the committed files drift from it. The long-term goal is for Portable Schema to succeed config schema and Typed Data as the way data is described. That is a long way off: until then config schema keeps being read and written as today, and every declared key is held to it.
+A declared key is checked against the config schema at its path, so it can only narrow what config schema allows, and config schema keeps being read and written as today. Portable Schema is meant to eventually succeed Typed Data and config schema as the way data is described. That is a long way off.
 
 ### Read from config schema
 
-The bridge for what a module has not converted yet. A config schema type is read into a structure as it is: a mapping becomes a group of keys, a sequence a list, and a type named through a sibling key (`[%parent.plugin]`) becomes keys that depend on that sibling. The module writes nothing and changes nothing. A block that has only config schema can already be placed through a resource this way, its plugin's defaults laid over the schema (`BlockPluginStructures` in `surface_examples_block`). Nothing forces a module off reading, and a module converts one structure at a time ([Declared in Portable Schema](#declared-in-code)).
-
-For a simple config object, a resource names the keys it takes and their structure is read from config schema, with `fromConfigSchema()` in the proof of concept ([step 2](resources-operations.md#keys)). A key config schema cannot describe fully is declared in code beside the names, and checked against the schema.
-
-What the module has: `Reader\ConfigSchemaReader` ([Reading a schema](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/reading-a-schema.md#config-schema)).
+This is the bridge for config another module owns and has not converted, and for plugins and config with no resource class. A mapping becomes a group of keys, a sequence becomes a list, and a type chosen by a sibling key (`[%parent.plugin]`) becomes keys that depend on that sibling. The module writes nothing and changes nothing: a block plugin that has only config schema can already be placed this way.
 
 ### Read from field definitions
 
-An entity type already has identity, storage, operations and access, so a resource for each bundle is derived from its field definitions, one structure per field. A field's structure is always read, because fields are set up on each site. The proof of concept derives `entity.content:node.page` and adds and edits a basic page through it. Multi-value fields, references, images and path aliases are not built, so this part rests on less evidence ([Content entities](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/entities.md#holes)).
+An entity type already has identity, storage, operations and access, so each bundle's resource is derived from its field definitions, one structure per field. A field's structure is always read, because fields are set up on each site.
 
 ## What a structure can say
 
 ### Keys that depend on another key {#variants}
 
-Three forms, from the most declarative:
-
-- **A rule stated as data.** "Without a license, at most 100": a condition from a closed list (`present`, `equals`, `atMost` and the rest) and an effect that only narrows. Written as `if`/`then` in the schema ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-rule-declared-as-data)).
-- **A list narrowed by a sibling.** A static method returns the narrower list for the sibling's value. The schema states every case it can list:
-
-    ```php
-    --8<-- "modules/surface_examples_first/src/Resource/StoreResource.php:36:60"
-    ```
-
-- **A group of keys chosen by a sibling.** A block's settings chosen by its plugin id, as core stores them beside the plugin id. Read from config schema's `[%parent.key]` types or declared per value.
+A rule can depend on another key's value. "Without a license, at most 100" is a condition from a closed list and an effect that only narrows, written as JSON Schema `if`/`then`. A list can narrow by a sibling, such as a store's regions by its country, and a group of keys can be chosen by a sibling, as a block's settings are chosen by its plugin id.
 
 ### Choices
 
-A list of allowed values carries its labels, so the list that validates is the list a form offers and the schema states. Where the site decides the list (languages, content types, rooms of a venue), a class lists it for the site through the constraint that names the kind. The lists answer core's `OptionsProviderInterface`, so code that reads that interface needs no knowledge of the proof of concept ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#our-options-answer-cores-question)).
+A list of allowed values carries its labels, so the list that validates is the list the form offers and the schema states. Where the site decides the list, such as languages or content types, a class lists it for the site. These lists answer core's `OptionsProviderInterface`, so code that already reads that interface works unchanged.
 
 ### Secrets
 
-A key whose stored value is never read back (an API key, a password) is one keyword, JSON Schema's `writeOnly`:
+A key whose stored value is never read back, such as an API key, is marked with JSON Schema's `writeOnly`:
 
 ```php
 --8<-- "modules/surface_examples/src/Resource/WebhookResource.php:39:42"
 ```
 
-The form draws a password field and keeps the stored value when left empty, the Tool API tool marks it write only, and no read at any depth returns it ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-secret-is-not-served-at-any-depth)). Whether core wants secrets in this form, and where they are encrypted, is not decided.
+The form draws a password field that keeps the stored value when left empty, the Tool API tool marks the key write only, and no read returns it.
 
 ## Other modules
 
 ### Another module
 
-A module adds its own keys to another module's structure in an alter class, and may only narrow what the owner allows, never widen it. Its keys are stored under `third_party_settings.<module>`, so the owner's storage and schema never need to know them ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#where-an-alters-keys-live)). The rule enforced is ownership: each key has one known owner, and only its owner may widen it. Where the keys are stored is not enforced; third-party settings, a key in the owner's schema and the module's own config object all keep working. A module that adds a license to an event registration, lifts the capacity rule with it, and rewords one label:
+A module adds its own keys to another module's structure in an alter class. It may narrow the owner's rules, never widen them. Its keys are stored under `third_party_settings.<module>`, so the owner's storage and schema never need to know them. Config entities already have this place; [step 3](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/core-gaps.md#step-3-third-party-settings-for-simple-config) gives it to simple config.
+
+A module that adds a license to an event registration, limits capacity to 100 without one, and rewords one label:
 
 ```php
 --8<-- "modules/surface_examples_compliance/src/Alter/RegistrationComplianceAlter.php:34:35"
@@ -80,40 +65,8 @@ A module adds its own keys to another module's structure in an alter class, and 
 }
 ```
 
-The owning class is unchanged and does not know the module exists. Today a form alter changes one form and nothing else that takes the same values, and `hook_config_schema_info_alter()` can loosen any module's rule with no record of who did. Here the same alter reaches the form, the Tool API tool and HTTP, and every narrowing is checked ([Typed Data at the edges](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/on-typed-data.md#why-each-part-is-not-core-alone)).
+The owning class is unchanged and does not know the module exists. Today a form alter changes one form and nothing else that takes the same values, and `hook_config_schema_info_alter()` can loosen any module's rule with no record of who did. Here one alter reaches the form and the Tool API tool, and every narrowing is checked.
 
 ### Beside
 
-Not built. Adding keys changes the owner's endpoints: a cached schema goes stale, a Tool API tool's input grows with every module enabled, and a tightened rule refuses a call that worked before the install. The direction accepted for data with its own id, storage or permission (meta tags, a URL alias, Paragraphs' children): a module declares a resource of its own that belongs to the other one. Forms combine the two resources on one page, and each keeps its own contract. An alter stays for settings stored inside the owner's object and for changing the owner's rules. A first survey of contributed modules found that one rule does not decide every case: data kept in the owner's own row and revision (Metatag, Scheduler) needs its own answer, and Paragraphs' children have a lifecycle their parent owns. See [the open question](../open/index.md#beside).
-
-## Considered and set aside
-
-- **Copying a config object's keys from its schema into a class, unchanged.** A key copied as config schema states it adds nothing. Converting a key states what config schema cannot: the form's title and description, the default, whether it is required, and its checks. A module that owns its config object may declare every key and generate the schema ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-config-object-is-described-by-its-resource)).
-- **A constraint of the author's own first.** A keyword is read by every client, a constraint with no keyword only by the server. The order is a keyword, then a list the site decides, then code ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-rule-is-a-keyword-first-a-list-second-code-last)).
-- **Every Typed Data type.** Types a JSON Schema document cannot state (`binary`, `language`, `any`) are refused, so the schema is exactly as wide as what validation accepts ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#one-table-of-leaf-types-read-by-the-blueprint-the-emitter-and-the-reader)).
-- **Declarations that read services or site state.** A declaration is static, so it takes no values and can be read without building anything; a rule that reads the site is marked as settled at run time ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-resource-or-structure-is-static)).
-
-## Open to improve
-
-- The PHP API for declaring keys. The proof of concept also tries writing a description directly as a schema, and declaring keys as class properties; both are experimental.
-- [Who owns a rule that depends on current values](../open/index.md#current-values), [whether another module may change a rule its owner declared](../open/index.md#owner-rules), and [entries a module adds inside a list its owner stores](../open/index.md#entries), such as Pathauto's punctuation.
-- Gaps the adopter ports found: a fixed state for one option in a list, a default read from a sibling key, and keys listed from the site costing a class of their own ([core gaps](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/core-gaps.md#what-this-module-is-evidence-for-and-what-it-is-not)).
-- Removing another module's keys from a simple config object when it is uninstalled: a simple config object records no dependencies.
-
-## Validation cases
-
-Blocks, conditions and actions (adoption group A), formatters (B), field types (C), workflow types (D), the content type and placed blocks (E), the content type alter in `surface_examples_extras`, and the Honeypot and Pathauto ports. Cases per form are on [How each piece is validated](validation.md#structures).
-
-## Ready when
-
-- [ ] Every block and condition plugin in core reads into a structure from its config schema with no change to the plugin.
-- [ ] An alter reaches the form, the Tool API tool and HTTP alike, and a widening is refused.
-- [ ] A decision on resources beside, with Metatag and Paragraphs tried.
-- [ ] The Typed Data and configuration system maintainers have reviewed the reading and step 3.
-
-## How to help
-
-- Run the config schema reader over a contributed module's schema and report what it cannot read.
-- Try the resources beside direction on Metatag or the URL alias, on paper first.
-- Collect how contributed modules change another module's rules today, for the owner-rules question.
-- Propose a smaller PHP API for declaring keys.
+Data with its own id, storage or permission, such as meta tags, a URL alias or Paragraphs' children, does not fit inside another module's structure: adding its keys there would change the owner's contract for every caller. The direction instead: the module declares a resource of its own that belongs to the other one, and a form combines both resources on one page, each with its own contract. This is not built yet ([open question](../open/index.md#beside)).

@@ -14,7 +14,7 @@ The proof of concept works from end to end, but core does not take it as one pie
 
 ## How a step moves
 
-Each step is prototyped in the proof of concept, extracted as a change to one core subsystem, tried on real core and contributed modules ([How each piece is validated](validation.md)), filed as a core issue that stands on its own, and reviewed by that subsystem's maintainers. What review changes goes back into the proof of concept.
+Each step is prototyped in the proof of concept, extracted as a change to one core subsystem, tried on real core and contributed modules, filed as a core issue that stands on its own, and reviewed by that subsystem's maintainers. What review changes goes back into the proof of concept.
 
 Three step 1 issues are open in core's queue. The rest of step 1 is drafted in the proof of concept's [core gaps](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/core-gaps.md#the-order). Steps 2 to 5 are not drafted.
 

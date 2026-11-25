@@ -1,13 +1,14 @@
 # What it builds on
 
-Everything here sits on top of systems core already has. A plugin is still a plugin. An entity is still an entity, saved by its own storage. Config is still config. Permissions, routes and cache metadata work as they do today. What it adds sits beside them: one HTTP route that serves every operation, a route for a generated form where a module wants one, and an access check on those routes that asks the permission each operation names.
+Everything here sits on systems core already has. A plugin is still a plugin, an entity is still saved by its own storage, and config is still config. Permissions, routes and cache metadata work as they do today.
 
-One thing is new: the description, and the operations that run through it. It is new because no existing system can hold what the others need. The existing systems can read from it, and otherwise work as they do today.
+Beside existing code it adds an optional route for a generated form, and an access check on routes that run an operation, asking the permission the operation names. The proof of concept also serves every operation over one HTTP route; that part is not proposed for core now.
 
-- **Constraint plugins.** Every rule the server checks is a core constraint plugin. Nothing new runs a rule.
-- **Config schema and field definitions.** Read into structures as they are, as the bridge until a module declares the structure in Portable Schema.
-- **JSON Schema.** Core already derives it from Typed Data for API responses and uses it for component props. A structure is written in it.
-- **`#config_target`.** Core already maps a hand-written form's element to a config key and a violation back to the element. A generated form does the same from the description. The proof of concept does not read `#config_target` yet, so a form that has it and a resource do not describe the same thing until it does.
-- **Form API elements.** A generated form is built from them. Field widgets are not changed.
+The one new piece is the description and the operations that run through it. It is new because no existing system can hold what the others need ([One more description](one-more-description.md)). It builds on:
+
+- **Config schema and field definitions.** Read into structures for config another module owns and has not converted, and for plugins and config with no resource class.
+- **Constraint plugins.** Every check runs as a core constraint plugin.
+- **JSON Schema.** Core already derives it from Typed Data and uses it for component props. A structure is written in it.
+- **Form API elements.** A generated form is built from them. Field widgets do not change.
 - **Tool API.** Every operation is published as a Tool API tool.
-- **Entity storage and access, and existing permissions.** A resource for an entity type uses its storage and access. An operation names a permission that already exists and creates none.
+- **Entity storage, access and existing permissions.** A resource for an entity type uses its storage and access. An operation names a permission that already exists and creates none.

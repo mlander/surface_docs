@@ -218,7 +218,7 @@ topics:
       - 'Code: module/src/Validation, module/src/Pipeline, module/src/Contract/ConstraintKeywords.php'
       - 'Tests: tests/src/Kernel/ConstraintRunnerTest.php, PipelineParityTest.php, PortableValidationTest.php, EveryDoorAgreesTest.php, tests/src/Unit/PortableValidatorTest.php'
       - 'decisions.md: "A definition is validated as itself"; "One adapter runs a constraint; the Typed Data footprint is pinned"; "The validator''s checks and the document read schemas"'
-      - 'module/docs/pipeline.md; page docs/path/validation.md'
+      - 'module/docs/pipeline.md'
       - 'No recorded human decision on the validation design itself; not marked experimental'
     proposed: working
   - slug: storage
