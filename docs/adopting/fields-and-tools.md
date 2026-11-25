@@ -54,7 +54,7 @@ The operations become `surface:field.instance:create`, `surface:field.instance:r
 
 ## Compared with `field_add`
 
-Both documents are the settings input for adding an address field, as Tool API's serializer hands it to a client. The proof of concept's [comparison test](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/modules/surface_examples_field/COMPARISON.md) generates them.
+Both documents are the settings input for adding an address field, as Tool API's serializer hands it to a client. The proof of concept's [comparison test](https://git.drupalcode.org/project/surface/-/blob/b3575908/modules/surface_examples_field/COMPARISON.md) generates them.
 
 Tool Belt's `field_add`, read from config schema, the whole `field_overrides` key:
 
