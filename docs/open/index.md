@@ -12,7 +12,9 @@ Which parts go into an existing core subsystem directly, which start as an exper
 
 ## Resources for config entity types {#config-entities}
 
-A content entity type's resources are derived from its field definitions, with no class written. A config entity type's resource is a class of its own in the proof of concept (`BlockPlacementResource`). Core already knows a config entity type's id key, label key, storage, access handler, admin permission and config schema. The options: derive a resource per config entity type from those, with its keys read from config schema; attach a class via the entity type attribute, as a handler beside form and access, where a module needs to say more; or both.
+A content entity type's resources are derived from its field definitions, with no class written, because a field definition says which values are computed or read only. A config entity type has no such marker. Its `config_export` list puts keys code sets beside keys a caller sets: a field storage's `module` is copied from the field type's provider, a placed block's `settings.provider` from its plugin, and a role's `weight` is set to last when missing. Config schema does not say which is which, and only some config entity schemas are marked `FullyValidatable`, so a write to the rest checks little.
+
+So a config entity type's resource is a class of its own for now. In the proof of concept, `BlockPlacementResource` sits beside the `Block` entity class and does not touch it. Two things are open: whether core attaches such a class via the entity type attribute, as a handler beside form and access; and whether [step 1](../path/groundwork.md) adds a marker for keys code sets, which a reader would turn into JSON Schema's `readOnly`. With that marker on a `FullyValidatable` type, its resource could be derived.
 
 ## Rules that depend on current values {#current-values}
 
