@@ -1,6 +1,6 @@
 # What it builds on
 
-Everything here sits on top of systems core already has. A plugin is still a plugin. An entity is still an entity, saved by its own storage. Config is still config. Permissions, routes and cache metadata work as they do today.
+Everything here sits on top of systems core already has. A plugin is still a plugin. An entity is still an entity, saved by its own storage. Config is still config. Permissions, routes and cache metadata work as they do today. What it adds sits beside them: one HTTP route that serves every operation, a route for a generated form where a module wants one, and an access check on those routes that asks the permission each operation names.
 
 One thing is new: the description, and the operations that run through it. It is new because no existing system can hold what the others need. The existing systems can read from it, and otherwise work as they do today.
 

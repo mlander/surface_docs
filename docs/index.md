@@ -16,19 +16,11 @@ A module describes its data once. Three concepts carry it:
 
 The ask is one new input layer beside forms. Every way in reads it, so all of them accept and refuse the same values.
 
-- **Additive.** Core's first changes are small patches to Typed Data, validation and the Field API, each fit for a [minor release](path/release-fit.md). Nothing is removed to make room.
-- **Opt in.** Nothing changes until a module chooses. Existing config schema and field definitions are read as they are.
+- **Additive.** It [builds on](why/builds-on.md) config schema, field definitions, constraint plugins, JSON Schema, Form API and entity storage and access. Core's first changes are small patches to Typed Data, validation and the Field API, each fit for a [minor release](path/release-fit.md). Nothing is removed to make room.
+- **Opt in.** Nothing changes until a module chooses, and stored data does not change. Existing config schema and field definitions are read as they are.
 - **A small first step.** A module adds one resource class beside its form. Each of its operations gets Tool API tools and HTTP calls, and the same checks at every way in. For the site information settings that is 46 lines of code ([Site information](adopting/site-information.md)).
 - **Forms when wanted.** A generated form replaces a hand-written one at the module's own pace, or never. `hook_form_alter()` still works on it, and since it is drawn from the [Portable Schema](path/portable-schema.md) document, a headless client can draw the same form.
 - **Deprecation on core's schedule.** Older APIs are deprecated only once the new ones are in use, [in a minor release and removed in the next major](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#s-deprecations).
-
-It builds on what core has: config schema and field definitions, constraint plugins, JSON Schema, Form API elements, entity storage and access. What it does not change:
-
-- **Plugins, entities and config.** A plugin is still a plugin, an entity is still an entity, config is still config. Config storage, export and import work as they do today, and stored data does not change.
-- **Routing and controllers.** Existing routes and controllers are untouched. A module adds a route only if it wants a generated form at a second path.
-- **Permissions.** An operation names a permission that already exists. None are created.
-- **Form API.** A generated form is a Form API form, built from its elements, and alters run on it as on any form.
-- **Field widgets.** They are not changed.
 
 ## Why not more Tool API tools?
 
