@@ -10,6 +10,10 @@ Most of what is missing can be said with plain JSON Schema keywords core's outpu
 
 Which parts go into an existing core subsystem directly, which start as an experimental module ([experimental policy](https://www.drupal.org/about/core/policies/core-change-policies/experimental/policy-and-list)), and under which names. What is new should stay small, and core's existing APIs should read from it.
 
+## Resources for config entity types {#config-entities}
+
+A content entity type's resources are derived from its field definitions, with no class written. A config entity type's resource is a class of its own in the proof of concept (`BlockPlacementResource`). Core already knows a config entity type's id key, label key, storage, access handler, admin permission and config schema. The options: derive a resource per config entity type from those, with its keys read from config schema; attach a class via the entity type attribute, as a handler beside form and access, where a module needs to say more; or both.
+
 ## Rules that depend on current values {#current-values}
 
 Who owns a rule that depends on what is stored now, such as a choice list that narrows when another key changes.
