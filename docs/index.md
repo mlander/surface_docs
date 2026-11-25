@@ -8,7 +8,7 @@ The copies can disagree, and each is only checked where it lives. A check writte
 
 A module describes its data once. Three concepts carry it:
 
-- **[Structures](path/structures.md).** The description of a thing's data: each key, its type, its choices and its rules. Most structures start out read from the config schema and field definitions a module already has. A structure has no actions of its own. A block plugin's settings, a field type's settings and a condition plugin's settings are structures: data shapes that something else stores and acts on.
+- **[Structures](path/structures.md).** The description of a thing's data: each key, its type, its choices and its rules. A structure is declared in Portable Schema, or read from the config schema and field definitions a module already has, as a bridge until it converts. A structure has no actions of its own. A block plugin's settings, a field type's settings and a condition plugin's settings are structures: data shapes that something else stores and acts on.
 - **[Resources and their operations](path/resources-operations.md).** A resource is a structure with identity, storage and permissions, and the named actions on it, such as "update the site information" or "place a block". A config object, a placed block and a content type are resources. Each operation is one action, with its input, its permission and its checks.
 - **[Portable Schema](path/portable-schema.md).** How structures and resources are written down and served: JSON Schema, with a small agreed set of extension keywords. It is a library that does not depend on Drupal, with validators in PHP and JavaScript that give the same answers. A resource's operation input and a plugin's settings are described in the same way.
 

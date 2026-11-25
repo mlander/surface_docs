@@ -2,8 +2,7 @@
 
 None of these has to be answered for the steps. They are listed so that nothing decided now closes them off.
 
-- **Config schema.** If a setting's description is written once and config schema is generated from it, config schema could in the long term become a generated file nobody writes by hand. Whether it is still needed then is a later question.
-- **Typed Data.** If core aligns on JSON Schema for describing data, fewer definitions would be written by hand over time. Field values are Typed Data objects, and that is a question for the Field API, apart from this path.
+- **Config schema and Typed Data.** The long-term goal is for Portable Schema to succeed both as the way data is described. That is a long way off. Until then config schema can be generated from a declared structure, so it becomes a file nobody writes by hand, and both keep being read. Field values are Typed Data objects, and that is a question for the Field API, apart from this path.
 - **Field widgets.** Whether they and the elements a generated form uses grow toward one shared contract, or are joined by a bridge.
 - **HTTP.** How an API for operations relates to JSON:API and REST.
 - **Recipes.** Whether a config action and a recipe input read an operation's description.

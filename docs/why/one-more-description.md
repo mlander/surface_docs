@@ -4,7 +4,7 @@ Adding a description to stop data being described several times sounds backward.
 
 ## What the existing places can hold
 
-A setting's label, description, limits and allowed values can be written in config schema. That is where most structures start: they are read from config schema as it is, and nothing about config schema changes.
+A setting's label, description, limits and allowed values can be written in config schema. A structure not converted yet is read from config schema as it is, and nothing about config schema changes.
 
 Three things remain, and none of them is about storage. They are about what someone may do.
 

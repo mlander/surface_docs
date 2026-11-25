@@ -4,7 +4,7 @@ topic: structure
 
 # Structures
 
-A structure is the description of a thing's data: each key, its type, its choices and its rules, with what a caller needs to send a valid value. Most structures start out read from the config schema and field definitions a module already has. A module declares a structure in code where those cannot say enough, and over time can declare the rest the same way, one structure at a time.
+A structure is the description of a thing's data: each key, its type, its choices and its rules, with what a caller needs to send a valid value. A structure is declared in Portable Schema, or, until a module converts it, read from the config schema it already has. Core's common settings would be converted ahead of time, and reading is the bridge for the rest. A field's structure is read from its field definition, because fields are set up on each site.
 
 ## What core gains, and the core change
 
@@ -14,9 +14,19 @@ Where a structure lives in core, and under which name, is [open](../open/index.m
 
 ## How a structure is made
 
+### Declared in Portable Schema {#declared-in-code}
+
+This is how a module converts its settings, and how core's common settings forms would be converted ahead of time. Each key carries its title, description, default and checks, and rules that are code sit beside it: a list that depends on another key or on the site, a comparison between two keys, input that is never stored. The description and its logic then sit in one class and are checked together. A settings page's whole description:
+
+```php
+--8<-- "modules/surface_examples_first/src/Resource/NewsletterResource.php:37:63"
+```
+
+Each key is a JSON Schema written with a builder. The class can generate the config object's schema and install file (`drush surface:config-schema`), and a test fails when the committed files drift from it. The long-term goal is for Portable Schema to succeed config schema and Typed Data as the way data is described. That is a long way off: until then config schema keeps being read and written as today, and every declared key is held to it.
+
 ### Read from config schema
 
-The starting point. A config schema type is read into a structure as it is: a mapping becomes a group of keys, a sequence a list, and a type named through a sibling key (`[%parent.plugin]`) becomes keys that depend on that sibling. The module writes nothing and changes nothing. A block that has only config schema can already be placed through a resource this way, its plugin's defaults laid over the schema (`BlockPluginStructures` in `surface_examples_block`). Nothing forces a module off reading. The direction over time is for a module to declare its structures where they are defined, at its own pace ([Declared in code](#declared-in-code)).
+The bridge for what a module has not converted yet. A config schema type is read into a structure as it is: a mapping becomes a group of keys, a sequence a list, and a type named through a sibling key (`[%parent.plugin]`) becomes keys that depend on that sibling. The module writes nothing and changes nothing. A block that has only config schema can already be placed through a resource this way, its plugin's defaults laid over the schema (`BlockPluginStructures` in `surface_examples_block`). Nothing forces a module off reading, and a module converts one structure at a time ([Declared in Portable Schema](#declared-in-code)).
 
 For a simple config object, a resource names the keys it takes and their structure is read from config schema, with `fromConfigSchema()` in the proof of concept ([step 2](resources-operations.md#keys)). A key config schema cannot describe fully is declared in code beside the names, and checked against the schema.
 
@@ -25,16 +35,6 @@ What the module has: `Reader\ConfigSchemaReader` ([Reading a schema](https://git
 ### Read from field definitions
 
 An entity type already has identity, storage, operations and access, so a resource for each bundle is derived from its field definitions, one structure per field. A field's structure is always read, because fields are set up on each site. The proof of concept derives `entity.content:node.page` and adds and edits a basic page through it. Multi-value fields, references, images and path aliases are not built, so this part rests on less evidence ([Content entities](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/entities.md#holes)).
-
-### Declared in code
-
-Declaring pays off where the rules are code: a list that depends on another key or on the site, a comparison between two keys, input that is never stored. The description and its logic then sit in one class and are checked together. A settings page's whole description:
-
-```php
---8<-- "modules/surface_examples_first/src/Resource/NewsletterResource.php:37:63"
-```
-
-Each key is a JSON Schema written with a builder. The class can generate the config object's schema and install file (`drush surface:config-schema`), and a test fails when the committed files drift from it. In the long term this could make hand-written config schema unnecessary for such a module. Reading and declaring work side by side, so a module moves one structure at a time.
 
 ## What a structure can say
 
@@ -88,7 +88,7 @@ Not built. Adding keys changes the owner's endpoints: a cached schema goes stale
 
 ## Considered and set aside
 
-- **Copying a config object's keys from its schema into a class.** Each key would be written twice. An operation names the keys and reads them; only a key config schema cannot describe is declared. A module that owns its config object may instead declare every key and generate the schema ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-config-object-is-described-by-its-resource)).
+- **Copying a config object's keys from its schema into a class, unchanged.** A key copied as config schema states it adds nothing. Converting a key states what config schema cannot: the form's title and description, the default, whether it is required, and its checks. A module that owns its config object may declare every key and generate the schema ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-config-object-is-described-by-its-resource)).
 - **A constraint of the author's own first.** A keyword is read by every client, a constraint with no keyword only by the server. The order is a keyword, then a list the site decides, then code ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-rule-is-a-keyword-first-a-list-second-code-last)).
 - **Every Typed Data type.** Types a JSON Schema document cannot state (`binary`, `language`, `any`) are refused, so the schema is exactly as wide as what validation accepts ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#one-table-of-leaf-types-read-by-the-blueprint-the-emitter-and-the-reader)).
 - **Declarations that read services or site state.** A declaration is static, so it takes no values and can be read without building anything; a rule that reads the site is marked as settled at run time ([decision](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/decisions.md#a-resource-or-structure-is-static)).
