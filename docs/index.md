@@ -21,7 +21,13 @@ The ask is to add the description once. Everything else reads from it.
 - **Nothing changes until a module chooses.** Existing config schema and field definitions are read as they are. A block that has only config schema can already be placed through a resource.
 - **The first step is small.** A module adds one resource class beside its existing form, or attaches one via attribute to a plugin it already has. Content entity types get theirs derived. The form keeps working. Stored config does not change.
 - **New pieces sit beside existing APIs.** Nothing is removed or deprecated to make room. Core's policy allows new APIs in a [minor release](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#minor) when they keep backward compatibility, and [Release fit](path/release-fit.md) checks each change against it. Once the new pieces are in use, older ones can be deprecated gracefully on core's [usual schedule](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#s-deprecations): deprecated in a minor release, removed in the next major.
-- **Forms follow when wanted.** A module may replace its hand-written form with one read from the description, at its own pace, or never. A generated form handles complex forms out of the box: grouped keys, keys that depend on another key's value, and forms in several steps. Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
+- **Forms follow when wanted.** A module may replace its hand-written form with one read from the description, at its own pace, or never. A generated form handles complex forms out of the box:
+    - forms in several steps, where a step can apply only when an earlier answer calls for it;
+    - keys that appear or become required depending on another key's value. These replace `#states`, and the server checks them at every way in, not only the browser ([Coming from `#states`](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/docs/forms.md#coming-from-states));
+    - choice lists and groups of keys that change when another key changes, redrawn over AJAX with no callback written by hand;
+    - repeating groups of keys a person adds and removes.
+
+    Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
 
 The first change is a new input layer beside forms. It describes each action's input once, and Tool API tools, Drush, recipes and HTTP clients read it. A form can read from the same layer right away, or later at its own pace.
 
