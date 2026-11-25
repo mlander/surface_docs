@@ -12,21 +12,6 @@ A module describes its data once. Three concepts carry it:
 - **[Resources and their operations](path/resources-operations.md).** A resource is a structure with identity, storage and permissions, and the named actions on it, such as "update the site information" or "place a block". A config object, a placed block and a content type are resources. Each operation is one action, with its input, its permission and its checks.
 - **[Portable Schema](path/portable-schema.md).** How structures and resources are written down and served: JSON Schema, with a small agreed set of extension keywords. It is a library that does not depend on Drupal, with validators in PHP and JavaScript that give the same answers. A resource's operation input and a plugin's settings are described in the same way.
 
-
-```mermaid
-flowchart LR
-  subgraph today["Today: six places"]
-    a["config schema<br>defaultConfiguration()<br>blockForm()<br>blockValidate()<br>blockSubmit()<br>constraint validator"]
-  end
-  subgraph once["With one description"]
-    direction TB
-    ways["Generated form<br>Tool API tools<br>HTTP calls<br>Drush"] --> op["Operation<br>permission and checks"]
-    st["Structure<br>in Portable Schema"] --> op
-    op --> store["Existing storage<br>config and entities"]
-  end
-  today ~~~ once
-```
-
 ## Add it once, beside what exists
 
 The ask is one new input layer beside forms. Every way in reads it, so all of them accept and refuse the same values.
