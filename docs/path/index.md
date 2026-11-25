@@ -18,7 +18,7 @@ The steps are the ones in the proof of concept's [core gaps](https://git.drupalc
 2. **Operations and access for simple config.** A config object gets named operations, a permission each, and access per key, as entity types have.
 3. **Third-party settings for simple config.** A place in a simple config object for another module's keys, as config entities have.
 4. **A served contract.** A JSON Schema of what an operation accepts, never stricter than the validation that judges the write.
-5. **Form API, last.** A form derived from the same description.
+5. **Form API, when wanted.** A form derived from the same description, which a module adopts at its own pace.
 
 The order is bottom-up. Each step pays off in code core already has and needs no later step. Nothing asks Form API to change before step 5.
 

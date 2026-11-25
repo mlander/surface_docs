@@ -6,23 +6,22 @@ The copies can disagree, and each is only checked where it lives. A check writte
 
 ## The direction
 
-A module describes its data once. The form, the validation, the Tool API tool, the HTTP call and the published description all read from that one description, so they accept the same values and refuse the same values in the same words.
+A module describes its data once. Three concepts carry it:
 
-Three concepts carry it:
-
-- **[Structures](path/structures.md).** The description of a thing's data: each key, its type, its choices and its rules. Most structures start out read from the config schema and field definitions a module already has. Over time a module can declare its structures in Portable Schema where they are defined, one at a time, and a declared structure takes the place of the read one. A structure has no actions of its own. A block plugin's settings, a field type's settings and a condition plugin's settings are structures: data shapes that something else stores and acts on.
+- **[Structures](path/structures.md).** The description of a thing's data: each key, its type, its choices and its rules. Most structures start out read from the config schema and field definitions a module already has. A structure has no actions of its own. A block plugin's settings, a field type's settings and a condition plugin's settings are structures: data shapes that something else stores and acts on.
 - **[Resources and their operations](path/resources-operations.md).** A resource is a structure with identity, storage and permissions, and the named actions on it, such as "update the site information" or "place a block". A config object, a placed block and a content type are resources. Each operation is one action, with its input, its permission and its checks.
 - **[Portable Schema](path/portable-schema.md).** How structures and resources are written down and served: JSON Schema, with a small agreed set of extension keywords. It is a library that does not depend on Drupal, with validators in PHP and JavaScript that give the same answers. A resource's operation input and a plugin's settings are described in the same way.
 
 ## Add it once, beside what exists
 
-The ask is one new input layer beside forms. It describes each action's input once, and everything else reads from it: Tool API tools, Drush, recipes, HTTP clients, and forms when a module chooses.
+The ask is one new input layer beside forms. It describes each action's input once. Tool API tools, Drush, recipes, HTTP clients, and forms when a module chooses, all read from it, so they accept and refuse the same values in the same words.
 
 It arrives in this order:
 
-- **Nothing changes until a module chooses.** Existing config schema and field definitions are read as they are. A block that has only config schema can already be placed through a resource.
-- **The first step is small.** A module adds one resource class beside its existing form, or attaches one via attribute to a plugin it already has. Content entity types get theirs derived. The form keeps working.
-- **Forms follow when wanted.** A module may replace its hand-written form with one generated from the description, at its own pace, or never. Generated forms scale from small, simple forms to complex, dynamic ones, and `hook_form_alter()` stays available for cosmetic changes. A form is drawn from the [Portable Schema](path/portable-schema.md) document, not from PHP, so any client that reads the document can draw it. That opens the way to headless forms: the proof of concept draws the same forms in React from the served documents alone, with the same checks ([React](path/stays-in-poc.md#react)). Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
+- **Core's first change is additive.** Step 1 is small patches to Typed Data, validation and the Field API, each reviewed by that subsystem's maintainers, and each pays off in code core already has ([The path into core](path/index.md)). One option is for the rest to start as an [experimental module](https://www.drupal.org/about/core/policies/core-change-policies/experimental/policy-and-list), so core commits to nothing until it has proven itself. Where each part lands is [open](open/index.md#where-the-parts-land).
+- **Nothing changes until a module chooses.** Existing config schema and field definitions are read as they are. A block that has only config schema can already be placed through a resource. Later, a module can declare its structures in Portable Schema where they are defined, one at a time, and a declared structure takes the place of the read one.
+- **A module's first step is small.** It adds one resource class beside its existing form, or attaches one via attribute to a plugin it already has. Content entity types get theirs derived. The form keeps working. For the site information settings that is two classes and 46 lines of code, with core's form, route and config schema untouched ([Site information](adopting/site-information.md)). It already gets the same checks at every way in, a Tool API tool and an HTTP call, before any form changes.
+- **Forms follow when wanted.** A module may replace its hand-written form with one generated from the description, at its own pace, or never. Generated forms scale from small, simple forms to complex, dynamic ones, and `hook_form_alter()` stays available for cosmetic changes. A form is drawn from the [Portable Schema](path/portable-schema.md) document, not from PHP, so any client that reads the document can draw the same form. The proof of concept draws headless forms this way in React ([React](path/stays-in-poc.md#react)). Once every way in reads the same description, other parts of core that copy and transform input can be simplified over time.
 - **Older APIs go only on core's schedule.** New pieces sit beside existing APIs, and nothing is removed or deprecated to make room. Core's policy allows new APIs in a [minor release](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#minor) when they keep backward compatibility, and [Release fit](path/release-fit.md) checks each change against it. Once the new pieces are in use, older ones can be deprecated gracefully on core's [usual schedule](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#s-deprecations): deprecated in a minor release, removed in the next major.
 
 It builds on what core has: config schema and field definitions, constraint plugins, JSON Schema, Form API elements, entity storage and access. What it does not change:
@@ -30,7 +29,7 @@ It builds on what core has: config schema and field definitions, constraint plug
 - **Plugins, entities and config.** A plugin is still a plugin, an entity is still an entity, config is still config. Config storage, export and import work as they do today, and stored data does not change.
 - **Routing and controllers.** Existing routes and controllers are untouched. A module adds a route only if it wants a generated form at a second path.
 - **Permissions.** An operation names a permission that already exists. None are created.
-- **Form API.** A generated form is built from Form API elements. Cosmetic overrides stay in Form API: a module changes how a generated form looks with `hook_form_alter()` or a small class that alters its render array, never what a value means.
+- **Form API.** A generated form is a Form API form, built from its elements, and alters run on it as on any form.
 - **Field widgets.** They are not changed.
 
 ## Why not more Tool API tools?
