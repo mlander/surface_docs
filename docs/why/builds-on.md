@@ -5,7 +5,7 @@ Everything here sits on top of systems core already has. A plugin is still a plu
 One thing is new: the description, and the operations that run through it. It is new because no existing system can hold what the others need. The existing systems can read from it, and otherwise work as they do today.
 
 - **Constraint plugins.** Every rule the server checks is a core constraint plugin. Nothing new runs a rule.
-- **Config schema and field definitions.** Read into structures as they are. A module may keep its config schema as the source for good.
+- **Config schema and field definitions.** Read into structures as they are. This is where a module starts, and it declares a structure in its place when it chooses.
 - **JSON Schema.** Core already derives it from Typed Data for API responses and uses it for component props. A structure is written in it.
 - **`#config_target`.** Core already maps a form element to a config key and a violation back to the element. A generated form uses the same mapping.
 - **Form API elements.** A generated form is built from them. Field widgets are not changed.

@@ -4,7 +4,7 @@ topic: structure
 
 # Structures
 
-A structure is the description of a thing's data: each key, its type, its choices and its rules, with what a caller needs to send a valid value. Most structures are read from the config schema and field definitions a module already has, and a module declares one in code only where those cannot say enough.
+A structure is the description of a thing's data: each key, its type, its choices and its rules, with what a caller needs to send a valid value. Most structures start out read from the config schema and field definitions a module already has. A module declares a structure in code where those cannot say enough, and over time can declare the rest the same way, one structure at a time.
 
 ## What core gains, and the core change
 
@@ -16,7 +16,7 @@ Where a structure lives in core, and under which name, is [open](../open/index.m
 
 ### Read from config schema
 
-The default, and a permanent one. A config schema type is read into a structure as it is: a mapping becomes a group of keys, a sequence a list, and a type named through a sibling key (`[%parent.plugin]`) becomes keys that depend on that sibling. The module writes nothing and changes nothing. A block that has only config schema can already be placed through a resource this way, its plugin's defaults laid over the schema (`BlockPluginStructures` in `surface_examples_block`). A module whose rules fit config schema may keep config schema as the source for good.
+The starting point. A config schema type is read into a structure as it is: a mapping becomes a group of keys, a sequence a list, and a type named through a sibling key (`[%parent.plugin]`) becomes keys that depend on that sibling. The module writes nothing and changes nothing. A block that has only config schema can already be placed through a resource this way, its plugin's defaults laid over the schema (`BlockPluginStructures` in `surface_examples_block`). Nothing forces a module off reading. The direction over time is for a module to declare its structures where they are defined, at its own pace ([Declared in code](#declared-in-code)).
 
 For a simple config object, a resource names the keys it takes and their structure is read from config schema, with `fromConfigSchema()` in the proof of concept ([step 2](resources-operations.md#keys)). A key config schema cannot describe fully is declared in code beside the names, and checked against the schema.
 
@@ -34,7 +34,7 @@ Declaring pays off where the rules are code: a list that depends on another key 
 --8<-- "modules/surface_examples_first/src/Resource/NewsletterResource.php:37:63"
 ```
 
-Each key is a JSON Schema written with a builder. The class can generate the config object's schema and install file (`drush surface:config-schema`), and a test fails when the committed files drift from it. In the long term this could make hand-written config schema unnecessary for such a module. Reading and declaring both stay supported.
+Each key is a JSON Schema written with a builder. The class can generate the config object's schema and install file (`drush surface:config-schema`), and a test fails when the committed files drift from it. In the long term this could make hand-written config schema unnecessary for such a module. Reading and declaring work side by side, so a module moves one structure at a time.
 
 ## What a structure can say
 

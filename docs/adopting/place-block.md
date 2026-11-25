@@ -115,7 +115,7 @@ The tests: `BlockPlacementToolsTest`, `BlockPlacementApiTest`, `BlockPlacementFo
 
 ## Later, if ever
 
-- **Rung 2 for the branding block.** Declaring its structure would carry the form's labels and descriptions to every caller. For three booleans whose rules config schema already states, that is not worth much. Reading the config schema can stay the source for good.
+- **Rung 2 for the branding block.** Declaring its structure would carry the form's labels and descriptions to every caller. For three booleans whose rules config schema already states, that is not worth much. Reading the config schema is enough for now.
 - **Rung 3 for the block layout.** Pointing core's block form route at the operation's form is possible, but it is not proposed here. Two things stand in the way: a plugin that reads a context, such as the node of the page, is not offered yet, and a block cannot move between themes through the update operation.
 - **Rung 4 for a block plugin.** A block that declares its structure no longer needs `defaultConfiguration()`, `blockForm()`, `blockValidate()` or `blockSubmit()`. The proof of concept keeps one block written both ways, [`surface_examples_classic`](https://git.drupalcode.org/project/surface/-/blob/d5486fd4/modules/surface_examples_classic/README.md), and a test holds the two to the same behavior.
 
