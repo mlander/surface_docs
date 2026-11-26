@@ -22,7 +22,7 @@ The ask is one new input layer beside forms. Every way in reads it, so all of th
 - **Forms when wanted.** A generated form replaces a hand-written one at the module's own pace, or never. `hook_form_alter()` still works on it, and since it is drawn from the [Portable Schema](path/portable-schema.md) document, a headless client can draw the same form.
 - **Deprecation on core's schedule.** Older APIs are deprecated only once the new ones are in use, [in a minor release and removed in the next major](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#s-deprecations).
 
-## Why not more Tool API tools?
+## Why not Tool API tools?
 
 Core could add a Tool API tool for each action on each thing. One thing would then have several tools, each in its own file with its own input, and an alter would have to find and change each one. Or core could add one resource with its operations, and every operation is published as a Tool API tool. The tools come from the description, and so do the form's checks and the HTTP call. [Why not Tool API?](why/not-tool-api.md) compares the two.
 
