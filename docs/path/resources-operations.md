@@ -28,6 +28,12 @@ A resource sits beside the forms a module already has. Each form is one operatio
 | `/admin/config/system/site-information` | configure | `surface:system.site:configure` | `PATCH /surface-api/system.site` |
 | | read | `surface:system.site:read` | `GET /surface-api/system.site` |
 
+Any operation also runs from the command line. The proof of concept adds one Drush command that runs an operation as an account, through the same checks. Without `--values` it only says whether the account may run the operation and which keys it takes:
+
+```bash
+drush surface:run system.site configure --uid=1 --values='{"slogan":"Built with Drupal"}' --dry-run
+```
+
 Operations are declared on the resource's class with attributes, as plugins and hooks are. The placed block's resource and its create operation:
 
 ```php

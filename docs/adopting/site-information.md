@@ -48,6 +48,7 @@ One operation, one validation, at every way in:
 | Way in | Where |
 |---|---|
 | Tool API tool | `surface:system.site:configure`, and a read tool |
+| Drush | `drush surface:run system.site configure` |
 | Generated form | `/admin/config/system/surface-site-information`, if the optional route is added |
 
 The proof of concept also serves it as `PATCH /surface-api/system.site`; HTTP is not proposed for core now. A write through any of them asks "administer site configuration", runs the same checks, and keeps the keys the resource does not declare as they were. An address that is not an email address is refused at `/mail`, and nothing is written.
