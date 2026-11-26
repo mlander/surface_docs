@@ -4,7 +4,7 @@ topic: tool-api
 
 # Why not Tool API
 
-Surface does not replace Tool API. It takes it a step further: every operation is published as a Tool API tool automatically, and the proof of concept depends on Tool API. Much of the difference is naming. An operation and a Tool API tool describe the same action; Surface declares it on the thing it acts on.
+Surface does not replace Tool API. It takes it a step further: when Tool API is installed, every operation is published as a Tool API tool automatically. Tool API is optional; without it, operations still run through forms and Drush. Much of the difference is naming. An operation and a Tool API tool describe the same action; Surface declares it on the thing it acts on.
 
 ## What Tool API does well
 
