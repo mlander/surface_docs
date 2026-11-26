@@ -28,7 +28,7 @@ The storage class names the config object and where the three pages are kept in 
 --8<-- "modules/surface_examples_site/src/Storage/SiteInformationStorage.php:17:33"
 ```
 
-Each declared key is held to core's config schema at its path when the resource is built, so it can only narrow what the schema allows. Core's `label` type refuses control characters, so the name and the slogan state that check too.
+Each declared key is held to core's config schema at its path when the resource is built, so it can only narrow what the schema allows. Core's `label` type refuses control characters, so the name and the slogan state that check too. The check that each page is a path of this site the account can open is core's own `ValidPath` constraint, the one path aliases use.
 
 What is added:
 
@@ -36,8 +36,7 @@ What is added:
 |---|---:|
 | The resource | 78 |
 | The storage | 12 |
-| A path check, the one core's form runs in `validateForm()` | 50 |
-| **Total** | **140** |
+| **Total** | **90** |
 | Optional: a route for a generated form at a second path | 9 |
 
 Code lines leave out blank lines and comments. **Removed: nothing.** Core's form, its route and its config schema are not touched.
