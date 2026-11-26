@@ -1,6 +1,6 @@
 # Describe it once
 
-Drupal describes the same data several times. A block plugin with settings writes a config schema file, `defaultConfiguration()`, a form in `blockForm()`, checks in `blockValidate()` and copying in `blockSubmit()`. In Drupal core 11.4 the site name is described in 6 places, a content type's "Create new revision" setting in 5, and the menu block's number of levels in 6. A Tool API tool or an HTTP client needs it described once more.
+Drupal describes the same data several times. A block plugin with settings requires a config schema file, `defaultConfiguration()`, a form in `blockForm()`, checks in `blockValidate()` and copying in `blockSubmit()`. In Drupal core 11.4 the site name is described in 6 places, a content type's "Create new revision" setting in 5, and the menu block's number of levels in 6. A Tool API tool or an HTTP client needs it described once more.
 
 The copies can disagree, and each is only checked where it lives. A check written in a form does not run when a recipe or a config import sets the value. None of the existing places can be grown to hold all of it: config schema describes what is stored, a form is PHP code nothing else can read, and a config action has no description of its input.
 
