@@ -28,6 +28,8 @@ The Tool API tools still run everywhere Tool API tools run. What changes is wher
 
 A module still writes a Tool API tool where an action is not an operation on a resource, or where a smaller tool works better: one that takes fewer keys, fixes some values, or chains several operations for an orchestration flow or an AI agent.
 
+Tool API takes Typed Data input definitions today and is to adopt Portable Schema as well. A hand-written Tool API tool and a published operation will then describe their input in the same schema language.
+
 ## On real code
 
 The field instance resource in the proof of concept has three operations: create a field, re-use an existing field, and update one. Each is published as a Tool API tool. Compared with a hand-written Tool API tool that adds a field to a bundle, these offer the field type's settings with their real choices and labels, where config schema gives only bare types. The same resource also produces the Field UI form. [Fields and Tool API tools](../adopting/fields-and-tools.md) shows both input schemas side by side.
