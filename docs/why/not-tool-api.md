@@ -4,7 +4,7 @@ topic: tool-api
 
 # Why not Tool API
 
-Surface does not replace Tool API. It publishes every operation as a Tool API tool, and the proof of concept depends on Tool API.
+Surface does not replace Tool API. It takes it a step further: every operation is published as a Tool API tool automatically, and the proof of concept depends on Tool API. Much of the difference is naming. An operation and a Tool API tool describe the same action; Surface declares it on the thing it acts on.
 
 ## What Tool API does well
 
@@ -23,6 +23,10 @@ Surface describes the thing once, as a resource, and its actions as operations o
 - **A change reaches every action at once.** A module that adds a key to the structure adds it to every operation that takes it, to every Tool API tool and to the form.
 
 The Tool API tools still run everywhere Tool API tools run. What changes is where their input comes from.
+
+## Hand-written Tool API tools still fit
+
+A module still writes a Tool API tool where an action is not an operation on a resource, or where a smaller tool works better: one that takes fewer keys, fixes some values, or chains several operations for an orchestration flow or an AI agent.
 
 ## On real code
 
