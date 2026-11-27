@@ -1,8 +1,8 @@
 # Why not forms from config schema
 
-A form looks like the obvious thing to generate from config schema: the keys, their types and their labels are there. It does not work, even for a simple settings form.
+Config schema looks like the obvious thing to generate forms from: the keys, their types and their labels are there. It is not enough, even for a simple settings form.
 
-Adding a description to stop data from being described several times also sounds backward. But no existing place can be extended to hold what a form, a Tool API tool and validation need, so today each of them is written by hand. Once one description holds it, the others can be read from it.
+Adding one more description to stop data from being described several times can sound backward. But no existing place can be extended to hold what a form, a Tool API tool and validation need, so today each of them is written by hand. Once one description holds it, the others can be read from it.
 
 ## What a form needs that config schema does not say
 
