@@ -1,6 +1,6 @@
 ---
 topic: tool-api
-human_reviewed: 2026-11-26
+human_reviewed: 2026-11-27
 ---
 
 # Why not Tool API
