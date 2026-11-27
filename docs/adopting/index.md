@@ -18,7 +18,7 @@ Stored config and config schema do not change at any rung.
 
 A module declares in Portable Schema the keys of config it owns. It writes the class anyway, and a declared key carries its title, description, default and checks to every way in. It reads keys from config schema only for config another module owns and has not converted, so the owner's rules are not copied into a module that does not own them. A plugin's settings stay read until the plugin declares them at rung 2.
 
-Rung 3 is the first rung that costs another module anything, which is why it comes late and is optional.
+Rung 3 is the first rung that costs another module anything, which is why it comes late and is optional, but recommended.
 
 ## Worked examples
 
