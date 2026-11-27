@@ -335,8 +335,8 @@ topics:
   - slug: http
     title: HTTP and OpenAPI
     package: resources
-    destination: later
-    page: path/stays-in-poc.md#http
+    destination: open
+    page: path/resources-operations.md#http
     maturity: null
     evidence:
       - 'Code: module/modules/surface_http, module/modules/surface_openapi'

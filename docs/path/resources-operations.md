@@ -14,7 +14,7 @@ A resource sits beside the forms a module already has. Each form is one operatio
 
 **A collection** holds many things, each with an id, such as placed blocks. Its operations are the standard ones: create, update and delete, and a read of the current values.
 
-| Core's form today | Operation | Tool API tool | HTTP, in the proof of concept |
+| Core's form today | Operation | Tool API tool | HTTP ([TBD](#http)) |
 |---|---|---|---|
 | `/admin/structure/block/add/{plugin_id}/{theme}` | create | `surface:block.placement:create` | `POST /surface-api/block.placement` |
 | `/admin/structure/block/manage/{block}` | update | `surface:block.placement:update` | `PATCH /surface-api/block.placement/{id}` |
@@ -23,12 +23,10 @@ A resource sits beside the forms a module already has. Each form is one operatio
 
 **A singleton** is one thing with no id, such as a config object. It has a read and one update, named `configure`.
 
-| Core's form today | Operation | Tool API tool | HTTP, in the proof of concept |
+| Core's form today | Operation | Tool API tool | HTTP ([TBD](#http)) |
 |---|---|---|---|
 | `/admin/config/system/site-information` | configure | `surface:system.site:configure` | `PATCH /surface-api/system.site` |
 | | read | `surface:system.site:read` | `GET /surface-api/system.site` |
-
-In the proof of concept, one OpenAPI 3.1 document at `/surface-api/openapi.json` describes every HTTP endpoint, with the schema of what each operation accepts.
 
 Any operation also runs from the command line. The proof of concept adds one Drush command that runs an operation as an account, through the same checks. Without `--values` it only says whether the account may run the operation and which keys it takes:
 
@@ -54,6 +52,10 @@ The read is derived from the update. Whether core names a config object's operat
 
 - **Declared by the module that owns the config.** Each key is declared in Portable Schema with its title, description, default and checks ([Structures](structures.md#declared-in-code)). Core's common settings forms would be converted ahead of time. A declared key is checked against the config schema at its path, so it can only narrow what config schema allows.
 - **Read where the owner has not converted.** A resource over another module's config names the keys it takes, and each key's type, label and constraints are read from that module's config schema. Declaring them would copy rules the resource does not own. This is the bridge until the owner converts, and config schema is not changed.
+
+## HTTP and OpenAPI {#http}
+
+Every operation is also an HTTP endpoint: the path names the resource and the method names the operation. One OpenAPI 3.1 document, at `/surface-api/openapi.json` in the proof of concept, describes every endpoint with the schema of what each operation accepts. Both are assumed throughout this site. Where they live, in core or in a module, and how they relate to JSON:API and REST, is [open](../open/later.md).
 
 ## Access
 

@@ -58,13 +58,17 @@ Code lines leave out blank lines and comments. **Removed: nothing.** Core's form
 
 Two operations. The resource declares `configure`, and a `read` is added beside it that returns the stored values and asks the same permission, so an account that may not change the settings may not read them either. Each runs the same way at every way in:
 
-| Way in | Where |
+| What | Where |
 |---|---|
 | Tool API tool | `surface:system.site:configure` and `surface:system.site:read` |
 | Drush | `drush surface:run system.site configure` |
+| HTTP | `PATCH /surface-api/system.site` and `GET /surface-api/system.site` (TBD) |
+| OpenAPI | Both endpoints, with the schema of what `configure` accepts, in `/surface-api/openapi.json` (TBD) |
 | Generated form | `/admin/config/system/site-information`, once its route points at the generated form ([below](#generated-form)) |
 
-The proof of concept also serves it as `PATCH /surface-api/system.site`, listed in its OpenAPI document; HTTP is not proposed for core now. A write through any of them asks "administer site configuration", runs the same checks, and keeps the keys the resource does not declare as they were. An address that is not an email address is refused at `/mail`, and nothing is written.
+TBD: HTTP and OpenAPI are assumed. Where they live, in core or in a module, is [open](../open/later.md), and the paths shown are the proof of concept's.
+
+A write through any of them asks "administer site configuration", runs the same checks, and keeps the keys the resource does not declare as they were. An address that is not an email address is refused at `/mail`, and nothing is written.
 
 Until its route is swapped, core's form at `/admin/config/system/site-information` saves through `Config::save()` as it does today, and does not run the operation's checks.
 

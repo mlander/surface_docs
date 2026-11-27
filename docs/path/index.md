@@ -20,6 +20,6 @@ Three step 1 issues are open in core's queue. The rest of step 1 is drafted in t
 
 ## What stays out
 
-HTTP and OpenAPI, staged edits, a React client and a code generator stay in the proof of concept and are not proposed now ([Stays in the proof of concept](stays-in-poc.md)).
+Staged edits, a React client and a code generator stay in the proof of concept and are not proposed now ([Stays in the proof of concept](stays-in-poc.md)). HTTP endpoints and their OpenAPI document are assumed throughout; where they live is [open](../open/later.md).
 
 The proof of concept shows that the definitions core has, plus the facts of step 1, are enough to state a settings object's rules once and hold every way in to them. It does not show that this order is the only one, or that its PHP API is the one core should adopt. Where the pieces land in core, and under which names, is an [open question](../open/index.md#where-the-parts-land). Whether each fits a minor release is checked on [Release fit](release-fit.md).

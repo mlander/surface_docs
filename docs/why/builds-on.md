@@ -2,7 +2,7 @@
 
 Everything here sits on systems core already has. A plugin is still a plugin, an entity is still saved by its own storage, and config is still config. Permissions, routes and cache metadata work as they do today.
 
-Beside existing code it adds an optional route for a generated form, and an access check on routes that run an operation, asking the permission the operation names. The proof of concept also serves every operation over one HTTP route; that part is not proposed for core now.
+Beside existing code it adds an optional route for a generated form, and an access check on routes that run an operation, asking the permission the operation names. It also serves every operation over HTTP, described in one OpenAPI document.
 
 The one new piece is the description and the operations that run through it. It is new because no existing system can hold what the others need ([One more description](one-more-description.md)). It builds on:
 
