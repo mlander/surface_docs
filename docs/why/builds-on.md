@@ -22,6 +22,7 @@ What is written several times today, or not at all, could come from one descript
 | | Today | With one description |
 |---|---|---|
 | **Forms** | Each form writes its own `buildForm()`, `validateForm()` and `submitForm()`, and follows Form API's good practice or not | Generated from the description, built the same way every time. A hand-written form still works. |
+| **Component forms** | Canvas matches each component prop's JSON Schema to a field type and widget to build the props form | A component's props schema is read as a structure, so its form is drawn the same way as any other. The proof of concept places a component in a block this way. |
 | **Config schema** | Written by hand, apart from the form that edits the same keys | Stays for now. For keys a module declares, it can be generated from the declaration, with a test that fails when the two drift. |
 | **What a write accepts** | Each way in reads and checks input its own way: a form's elements, a Drush command's arguments, a config action's | One pipeline at every way in: accept and coerce the input, validate it, map it to storage, then write |
 | **Permissions** | The form's route asks the permission. A Drush command, a config action or a Tool API tool that writes the same settings asks none unless its author adds it | The operation names the permission, and every way in asks it |
