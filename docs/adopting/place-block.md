@@ -72,6 +72,8 @@ and names it on the plugin class:
 --8<-- "modules/surface_examples_component_block/src/Plugin/Block/ComponentBlock.php:26:31"
 ```
 
+A plugin class can also be its own structure: `#[UsesStructure]` with no argument, and `defineInputs()` on the plugin class itself. The proof of concept's example field formatter is written that way. A separate structure class, as here, is for a structure used in more than one place, where another plugin or a resource names the same class.
+
 The placement resource places it with no code added for it.
 
 ## Swapping in the generated form {#generated-form}
