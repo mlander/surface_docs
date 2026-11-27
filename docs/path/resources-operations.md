@@ -46,7 +46,10 @@ A singleton's, the newsletter settings of the first example:
 --8<-- "modules/surface_examples_first/src/Resource/NewsletterResource.php:18:27"
 ```
 
-The read is derived from the update. Whether core names a config object's operations on a PHP class, as here, or in its config schema is open.
+The read is derived from the update.
+
+!!! question "TBD"
+    Whether core names a config object's operations on a PHP class, as here, or in its config schema is open.
 
 ### Where an operation's keys come from {#keys}
 
@@ -55,7 +58,10 @@ The read is derived from the update. Whether core names a config object's operat
 
 ## HTTP and OpenAPI {#http}
 
-Every operation is also an HTTP endpoint: the path names the resource and the method names the operation. One OpenAPI 3.1 document, at `/surface-api/openapi.json` in the proof of concept, describes every endpoint with the schema of what each operation accepts. Both are assumed throughout this site. Where they live, in core or in a module, and how they relate to JSON:API and REST, is [open](../open/later.md).
+Every operation is also an HTTP endpoint: the path names the resource and the method names the operation. One OpenAPI 3.1 document, at `/surface-api/openapi.json` in the proof of concept, describes every endpoint with the schema of what each operation accepts.
+
+!!! question "TBD"
+    HTTP and OpenAPI are assumed throughout this site. Where they live, in core or in a module, and how they relate to JSON:API and REST, is [open](../open/later.md).
 
 ## Access
 

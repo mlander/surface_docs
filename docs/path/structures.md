@@ -69,4 +69,7 @@ The owning class is unchanged and does not know the module exists. Today a form 
 
 ### Beside
 
-Data with its own id, storage or permission, such as meta tags, a URL alias or Paragraphs' children, does not fit inside another module's structure: adding its keys there would change the owner's contract for every caller. The direction instead: the module declares a resource of its own that belongs to the other one, and a form combines both resources on one page, each with its own contract. This is not built yet ([open question](../open/index.md#beside)).
+Data with its own id, storage or permission, such as meta tags, a URL alias or Paragraphs' children, does not fit inside another module's structure: adding its keys there would change the owner's contract for every caller.
+
+!!! question "TBD"
+    The direction: the module declares a resource of its own that belongs to the other one, and a form combines both resources on one page, each with its own contract. Not built yet; see the [open question](../open/index.md#beside).

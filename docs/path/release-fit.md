@@ -16,4 +16,5 @@ Nothing on the path asks for a deprecation. If core later deprecates an older AP
 
 Experimental modules are added only in minor releases. Before one is added, the [experimental policy](https://www.drupal.org/about/core/policies/core-change-policies/experimental/policy-and-list) asks for no known security or data integrity issues, functional tests of the main use case, documentation with a draft change record, and a roadmap issue for the remaining work. An alpha module may still break its own API; it then moves to beta and stable across minor releases.
 
-Which parts go into an existing core subsystem directly and which start as a module is an [open question](../open/index.md#where-the-parts-land).
+!!! question "TBD"
+    Which parts go into an existing core subsystem directly and which start as a module is an [open question](../open/index.md#where-the-parts-land).

@@ -29,4 +29,5 @@ Plain JSON Schema keywords come first. Most of what core's definitions cannot sa
 | Hints for drawing a form: widget, placeholder, grouping, weight. Written only when a caller asks, so the contract names no widget | `x-portable-ui` |
 | Where to ask the server for what the document leaves out, such as an entity lookup | `x-portable-links` |
 
-Which dialect core adopts, and how its validators relate to the one core uses for component props, is an [open question](../open/index.md#schema-language).
+!!! question "TBD"
+    Which dialect core adopts, and how its validators relate to the one core uses for component props, is an [open question](../open/index.md#schema-language).

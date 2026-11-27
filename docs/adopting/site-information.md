@@ -21,7 +21,10 @@ In core, two classes would sit beside the files the system module has today:
 | `src/Resource/SiteInformationResource.php` | The keys, the operations and their permission | Added |
 | `src/Storage/SiteInformationStorage.php` | Where each key is stored | Added |
 
-In the proof of concept the two classes live in the example module `surface_examples_site`. The directory and class names are the proof of concept's; core's are open.
+In the proof of concept the two classes live in the example module `surface_examples_site`.
+
+!!! question "TBD"
+    The directory and class names are the proof of concept's; core's are open.
 
 The resource names the config object, the operation and its permission, which already exists:
 
@@ -74,8 +77,6 @@ A write through any of them asks "administer site configuration", runs the same 
 
 Until its route is swapped, core's form at `/admin/config/system/site-information` saves through `Config::save()` as it does today, and does not run the operation's checks.
 
-Two known gaps: the email format refuses internationalized addresses that core's Email constraint accepts, and a name of only spaces is accepted where core's form trims it first.
-
 ## Swapping in the generated form {#generated-form}
 
 Rung 3 points the form's route at the operation. The form is then built from the resource on each request: the declared titles, descriptions, defaults and groups, saved through the operation's checks. On core's own route, one line changes and two are added:
@@ -93,7 +94,10 @@ Rung 3 points the form's route at the operation. The form is then built from the
      _permission: 'administer site configuration'
 ```
 
-The proof of concept puts the same defaults on a second route, `/admin/config/system/surface-site-information`, so core's form stays as it is. The class and key names are the proof of concept's; core's are open. With the route swapped, `SiteInformationForm` can be deleted at rung 4, apart from one thing the resource does not do yet: show PHP's `sendmail_from` address when no email address is stored.
+The proof of concept puts the same defaults on a second route, `/admin/config/system/surface-site-information`, so core's form stays as it is. With the route swapped, `SiteInformationForm` can be deleted at rung 4, apart from one thing the resource does not do yet: show PHP's `sendmail_from` address when no email address is stored.
+
+!!! question "TBD"
+    The form class and route key names are the proof of concept's; core's are open.
 
 ## Before the owner converts {#declaring-a-key}
 
