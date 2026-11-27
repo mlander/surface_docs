@@ -1,3 +1,7 @@
+---
+human_reviewed: 2026-11-27
+---
+
 # What it builds on, and what it could consolidate
 
 Everything here sits on systems core already has. A plugin is still a plugin, an entity is still saved by its own storage, and config is still config. Permissions, routes and cache metadata work as they do today.
