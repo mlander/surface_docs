@@ -64,8 +64,7 @@ nav:
       - why/index.md
       - Why not Tool API: why/not-tool-api.md
       - Why not forms from config schema: why/not-config-schema-forms.md
-      - What it builds on: why/builds-on.md
-      - What it could consolidate: why/consolidates.md
+      - What it builds on and consolidates: why/builds-on.md
   - Adopting it:
       - adopting/index.md
       - "Example 1: Site information": adopting/site-information.md
