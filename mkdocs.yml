@@ -46,7 +46,14 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      # Snippets start mid-file, with no `<?php`; without startinline the
+      # PHP lexer reads them as plain text.
+      extend_pygments_lang:
+        - name: php
+          lang: php
+          options:
+            startinline: true
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
