@@ -17,16 +17,18 @@ The one new piece is the description and the operations that run through it. It 
 
 ## What it could consolidate {#consolidate}
 
-What is written several times today could be written once. Each line takes effect only where a module adopts the step it depends on.
+What is written several times today, or not at all, could come from one description. Each line takes effect only where a module adopts the step it depends on.
 
-| Today | With one description |
-|---|---|
-| A settings form's `buildForm()`, `validateForm()` and `submitForm()` | Generated from the description. A hand-written form still works. |
-| A block plugin's config schema, `defaultConfiguration()`, `blockForm()`, `blockValidate()` and `blockSubmit()` | One declaration |
-| Separate input descriptions for recipe inputs, config actions and Tool API tools | Read from the operation |
-| Several Tool API tools for the actions on one thing, each with its own input | One resource with several operations sharing one structure |
-| A different alter hook per system for the same data | One way to add keys to a description, with a known owner for each key. Existing hooks keep working. |
-| Hand-written config schema for keys a module owns | Generated from the structure the module declares. Hand-written config schema keeps working. |
+| | Today | With one description |
+|---|---|---|
+| **Forms** | Each form writes its own `buildForm()`, `validateForm()` and `submitForm()`, and follows Form API's good practice or not | Generated from the description, built the same way every time. A hand-written form still works. |
+| **Config schema** | Written by hand beside the form | Stays for now. For keys a module declares, it can be generated from the declaration, with a test that fails when the two drift. |
+| **What a write accepts** | Each way in reads and checks input its own way: a form's elements, a Drush command's arguments, a config action's | One pipeline at every way in: accept and coerce the input, validate it, map it to storage, then write |
+| **Dry run** | Rare, since the checks live in a form's submit handler | Every operation can run without writing and answer what would change and what would be refused |
+| **Observability** | Each way in logs, or not, on its own | Every write goes through one runner, so one place can record who ran what, through which way in, and what was refused |
+
+!!! question "TBD"
+    What the runner records itself, and what it leaves to logging and other modules, is an [open question](../open/index.md#observability).
 
 Portable Schema is meant to eventually succeed Typed Data and config schema. That is a long way off, and both keep being read in the meantime.
 
