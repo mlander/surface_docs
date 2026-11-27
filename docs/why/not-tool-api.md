@@ -59,7 +59,7 @@ What each gives:
 | OpenAPI | None | One document for every endpoint |
 | Form | Field UI's own, separate | Generated from the same structure |
 
-A Tool API tool is an action with an input and an output. It has no identity, path or method, so nothing in its structure maps it to an HTTP endpoint or an OpenAPI document. An MCP server can expose it, as a tool call. A resource has identity keys and named operations, which map to a path and a method.
+Each Tool API tool has its own plugin id, input and output, and nothing relates one tool to another: Tool API does not know that `tool_belt:field_add`, `tool_belt:field_update` and `tool_belt:field_delete` act on the same thing. Operations share a resource: one structure, the keys that identify a field, and one storage. That relationship is what lets them be mapped to HTTP endpoints, with the resource and its identity in the path and the operation as the method, and described together in one OpenAPI document.
 
 !!! question "TBD"
     HTTP and OpenAPI are assumed. Where they live, in core or in a module, is [open](../open/later.md).
