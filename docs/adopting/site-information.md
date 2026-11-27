@@ -10,6 +10,19 @@ The form's rules live in its PHP: titles and descriptions, which fields are requ
 
 ## The change
 
+In core, two classes would sit beside the files the system module has today:
+
+| File in `core/modules/system` | What it holds | With the change |
+|---|---|---|
+| `src/Form/SiteInformationForm.php` | The form: labels, required fields, checks | Unchanged |
+| `system.routing.yml` | The form's route and its permission | Unchanged until [rung 3](#generated-form) |
+| `config/schema/system.schema.yml` | The keys' types | Unchanged |
+| `config/install/system.site.yml` | The install values | Unchanged |
+| `src/Resource/SiteInformationResource.php` | The keys, the operation and its permission | Added |
+| `src/Storage/SiteInformationStorage.php` | Where each key is stored | Added |
+
+In the proof of concept the two classes live in the example module `surface_examples_site`. The directory and class names are the proof of concept's; core's are open.
+
 The resource names the config object, the operation and its permission, which already exists:
 
 ```php
