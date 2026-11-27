@@ -9,7 +9,8 @@ Adding a description to stop data from being described several times also sounds
 - **Which keys it takes.** `system.site` stores 11 keys and its form edits 6. Config schema lists all 11 and says nothing about which belong to which form.
 - **Who may use it.** The permission is on the form's route, not in the schema. Two actions on one config object can need different permissions: the site's notification address is changed on the account settings page, under "administer account settings".
 - **How entered values become stored values.** The site email field shows PHP's `sendmail_from` when the stored value is empty. A config entity's machine name is entered once, when it is created. These are rules of the action, not of storage.
-- **Rules that depend on the site or on other values.** A front page that must be a path the current user may visit, a choice list that is whatever the site has, a key that applies only when another key has a certain value.
+- **Rules that depend on who is acting.** The front page must be a path the account saving the form may visit. Config is also written by imports and recipes, where there is no such account, so config schema has no place for this rule. An operation always runs as an account.
+- **Choices with labels.** Config schema allows any integer for the page cache's maximum age; core's form offers 14 periods, each with a label. Config schema can check a value against a list, but it gives a form no labels to show.
 
 A form is one way to run an action. Without a description of the action, nothing says which keys a form takes or who may submit it. The same is true of a Tool API tool.
 
