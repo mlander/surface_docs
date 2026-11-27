@@ -20,6 +20,8 @@ Its input is every key a placed block has: label, machine name, whether the labe
 --8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:96:162"
 ```
 
+`plugin` gets its choices from the `settings` variants: the block plugins the layout offers, each under its admin label.
+
 The regions offered depend on the theme chosen:
 
 ```php
