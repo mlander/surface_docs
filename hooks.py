@@ -2,9 +2,10 @@
 
 Reads topics.yml once, then:
 
-- puts a status strip under the title of every page whose front matter
-  names a `topic`, and a "Human approved" mark above it on every page
-  whose front matter has `approved: <date>` (reviewed in full and frozen);
+- puts a "Human reviewed" mark under the title of every page whose front
+  matter has `human_reviewed: <date>`: a person has read the page in full.
+  It says nothing about whether an idea is settled; every idea is still
+  open;
 - replaces the line `<!-- board -->` with the table of every talking point;
 - fails the build when a page names a topic that topics.yml does not list,
   or a topic carries a level or destination that is not defined.
@@ -72,22 +73,6 @@ def _link(page_file: str, target: str) -> str:
     return rel + (f"#{anchor}" if anchor else "")
 
 
-def _strip(topic: dict, page_file: str) -> str:
-    destination = _DATA["destinations"][topic["destination"]]["label"]
-    parts = [
-        f'<strong>Maturity</strong> {_badge(topic.get("maturity"), topic.get("proposed"))}',
-        f"<strong>Destination</strong> {destination}",
-    ]
-    reviewed = topic.get("reviewed")
-    parts.append(f"<strong>Last reviewed</strong> {reviewed}" if reviewed else "<strong>Last reviewed</strong> not yet")
-    discussion = topic.get("discussion")
-    if discussion:
-        parts.append(f'<strong>Discussion</strong> <a href="{discussion}">issue</a>')
-    levels_page = _link(page_file, "about/maturity.md")
-    parts.append(f'<a href="{levels_page.replace(".md", "/")}">What the levels mean</a>')
-    return '<div class="status-strip">' + " · ".join(parts) + "</div>\n"
-
-
 def _board(page_file: str) -> str:
     lines = []
     for key, package in _DATA["packages"].items():
@@ -111,10 +96,10 @@ def _board(page_file: str) -> str:
     return "\n".join(lines)
 
 
-def _approved(date) -> str:
+def _human_reviewed(date) -> str:
     return (
-        '<div class="approved"><span class="approved-box" aria-hidden="true">&#x2611;</span> '
-        f"<strong>Human approved</strong> {date}</div>\n"
+        '<div class="human-reviewed"><span class="human-reviewed-box" aria-hidden="true">&#x2611;</span> '
+        f"<strong>Human reviewed</strong> {date}</div>\n"
     )
 
 
@@ -132,14 +117,12 @@ def _under_title(markdown: str, block: str) -> str:
 def on_page_markdown(markdown, page, config, files):
     if "<!-- board -->" in markdown:
         markdown = markdown.replace("<!-- board -->", _board(page.file.src_uri))
-    approved = page.meta.get("approved")
+    reviewed = page.meta.get("human_reviewed")
     slug = page.meta.get("topic")
     if slug:
         topic = _DATA["by_slug"].get(slug)
         if topic is None:
             raise PluginError(f"{page.file.src_uri} names topic {slug!r}, which topics.yml does not list.")
-        markdown = _under_title(markdown, _strip(topic, page.file.src_uri))
-    # Inserted last, so it sits directly under the title, above the strip.
-    if approved:
-        markdown = _under_title(markdown, _approved(approved))
+    if reviewed:
+        markdown = _under_title(markdown, _human_reviewed(reviewed))
     return markdown

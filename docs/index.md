@@ -1,5 +1,5 @@
 ---
-approved: 2026-11-25
+human_reviewed: 2026-11-25
 ---
 
 # Describe it once
