@@ -8,10 +8,10 @@ A placed block is the config entity `block.block.<id>`, and each plugin describe
 
 ## The resource, added once
 
-The module that owns block placement adds the resource; in core that is the block module. It names the block config entity as its storage, the machine name as its identity, and its operations. Each asks "administer blocks", the permission core's block layout asks today:
+The module that owns block placement adds the resource; in core that is the block module. It names the block config entity as its storage, the machine name as its identity, and its operations: create, update and delete, with a read added beside them. Update names the block by its machine name and keeps it in its own theme. Each asks "administer blocks", the permission core's block layout asks today:
 
 ```php
---8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:35:48"
+--8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:35:87"
 ```
 
 Its input is every key a placed block has: label, machine name, whether the label shows, the plugin, the plugin's settings, theme, region, weight, status and visibility conditions. The `settings` key depends on the chosen plugin:
