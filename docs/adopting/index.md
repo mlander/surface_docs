@@ -1,3 +1,7 @@
+---
+human_reviewed: 2026-11-27
+---
+
 # Adopting it
 
 A module adopts by adding a resource class beside the form(s) it already has. One resource can cover several forms, such as a placed block's add, edit and delete forms, each as one operation. The class names the thing, where its values are stored, and its operations, each with a permission that already exists. The forms, their routes, stored config and config schema stay as they are.
