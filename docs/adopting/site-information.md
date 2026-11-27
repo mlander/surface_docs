@@ -18,7 +18,7 @@ In core, two classes would sit beside the files the system module has today:
 | `system.routing.yml` | The form's route and its permission | Unchanged until [rung 3](#generated-form) |
 | `config/schema/system.schema.yml` | The keys' types | Unchanged |
 | `config/install/system.site.yml` | The install values | Unchanged |
-| `src/Resource/SiteInformationResource.php` | The keys, the operation and its permission | Added |
+| `src/Resource/SiteInformationResource.php` | The keys, the operations and their permission | Added |
 | `src/Storage/SiteInformationStorage.php` | Where each key is stored | Added |
 
 In the proof of concept the two classes live in the example module `surface_examples_site`. The directory and class names are the proof of concept's; core's are open.
@@ -56,11 +56,11 @@ Code lines leave out blank lines and comments. **Removed: nothing.** Core's form
 
 ## What it gets
 
-One operation, one validation, at every way in:
+Two operations. The resource declares `configure`, and a `read` is added beside it that returns the stored values and asks the same permission, so an account that may not change the settings may not read them either. Each runs the same way at every way in:
 
 | Way in | Where |
 |---|---|
-| Tool API tool | `surface:system.site:configure`, and a read tool |
+| Tool API tool | `surface:system.site:configure` and `surface:system.site:read` |
 | Drush | `drush surface:run system.site configure` |
 | Generated form | `/admin/config/system/surface-site-information`, if the optional route is added |
 
