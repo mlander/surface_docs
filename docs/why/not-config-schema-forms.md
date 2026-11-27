@@ -1,3 +1,7 @@
+---
+human_reviewed: 2026-11-27
+---
+
 # Why not forms from config schema
 
 Config schema looks like the obvious thing to generate forms from: the keys, their types and their labels are there. It is not enough, even for a simple settings form.
