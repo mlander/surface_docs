@@ -2,12 +2,14 @@
 
 A form looks like the obvious thing to generate from config schema: the keys, their types and their labels are there. It does not work, even for a simple settings form.
 
+Adding a description to stop data from being described several times also sounds backward. But no existing place can be extended to hold what a form, a Tool API tool and validation need, so today each of them is written by hand. Once one description holds it, the others can be read from it.
+
 ## What a form needs that config schema does not say
 
 - **Which keys it takes.** `system.site` stores 11 keys and its form edits 6. Config schema lists all 11 and says nothing about which belong to which form.
-- **Who may use it.** The permission is on the form's route, not in the schema. Two actions on one config object can need different permissions.
-- **How entered values become stored values.** A field that shows a fallback when the stored value is empty, or a key that is entered once and never changed, is a rule of the action, not of storage.
-- **Rules that depend on the site.** A path that must exist, a choice list that is whatever the site has.
+- **Who may use it.** The permission is on the form's route, not in the schema. Two actions on one config object can need different permissions: the site's notification address is changed on the account settings page, under "administer account settings".
+- **How entered values become stored values.** The site email field shows PHP's `sendmail_from` when the stored value is empty. A config entity's machine name is entered once, when it is created. These are rules of the action, not of storage.
+- **Rules that depend on the site or on other values.** A front page that must be a path the current user may visit, a choice list that is whatever the site has, a key that applies only when another key has a certain value.
 
 A form is one way to run an action. Without a description of the action, nothing says which keys a form takes or who may submit it. The same is true of a Tool API tool.
 
@@ -16,6 +18,10 @@ A form is one way to run an action. Without a description of the action, nothing
 An operation states the keys it takes, the permission it needs and how its input maps to what is stored. A form, a Tool API tool and Drush are then each one way to run it, with the same validation.
 
 A module declares the keys it owns in Portable Schema. For config another module owns and has not converted, and for plugins and config with no resource class, each key's type and label are read from config schema as the bridge.
+
+## Not only config
+
+Config schema covers config only. Content entities and plugin settings need the same answers, and today they are written in other places: field definitions, form classes, plugin methods. One description covers all of them. It is written as JSON Schema, which core already uses for component props and which a Tool API tool reads; [Portable Schema](../path/portable-schema.md) adds the few extension keywords plain JSON Schema lacks.
 
 ## And forms when wanted
 
