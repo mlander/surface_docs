@@ -52,7 +52,8 @@ What is added:
 | **Total** | **90** |
 | Optional, at rung 3: the route points at the generated form ([below](#generated-form)) | 3 |
 
-Code lines leave out blank lines and comments. **Removed: nothing.** Core's form, its route and its config schema are not touched.
+!!! note "Removed: nothing"
+    Core's form, its route and its config schema are not touched. Code lines leave out blank lines and comments.
 
 ## What it gets
 
@@ -66,7 +67,8 @@ Two operations. The resource declares `configure`, and a `read` is added beside 
 | OpenAPI | Both endpoints, with the schema of what `configure` accepts, in `/surface-api/openapi.json` (TBD) |
 | Generated form | `/admin/config/system/site-information`, once its route points at the generated form ([below](#generated-form)) |
 
-TBD: HTTP and OpenAPI are assumed. Where they live, in core or in a module, is [open](../open/later.md), and the paths shown are the proof of concept's.
+!!! question "TBD"
+    HTTP and OpenAPI are assumed. Where they live, in core or in a module, is [open](../open/later.md), and the paths shown are the proof of concept's.
 
 A write through any of them asks "administer site configuration", runs the same checks, and keeps the keys the resource does not declare as they were. An address that is not an email address is refused at `/mail`, and nothing is written.
 
