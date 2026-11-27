@@ -37,22 +37,17 @@ With Tool API tools, each action on a field is its own plugin class with its own
 
 | File | Holds |
 |---|---|
-| `src/Plugin/tool/Tool/FieldStorageAdd.php` | Creates a field storage |
-| `src/Plugin/tool/Tool/FieldStorageUpdate.php` | Updates a field storage |
-| `src/Plugin/tool/Tool/FieldStorageDelete.php` | Deletes a field storage |
 | `src/Plugin/tool/Tool/FieldAdd.php` | Adds a field to a bundle, using an existing storage |
 | `src/Plugin/tool/Tool/FieldUpdate.php` | Updates a field on a bundle |
 | `src/Plugin/tool/Tool/FieldDelete.php` | Deletes a field from a bundle |
 | `src/Plugin/tool/Tool/EntityBundleFieldDefinitions.php` | Reads a bundle's field configuration |
 
-With resources, the field on a bundle and the storage that bundles share are each described once, as two resources. The field attaches the storage as a child, so adding a field with a new storage is one call that writes both, as Field UI's add form does. The proof of concept's field example:
+With a resource, the field on a bundle is described once and each action is an operation on it. The proof of concept's field example:
 
 | File | Holds |
 |---|---|
 | `src/Resource/FieldInstanceResource.php` | The field's structure and its operations: create with a new storage, reuse an existing storage, update. A read is added beside them; a delete would be one more operation here. |
 | `src/Storage/FieldInstanceResourceStorage.php` | Where a field's values are kept: its field config entity |
-| `src/Resource/FieldStorageResource.php` | The storage's structure and its operations: create, asked only through a field, and update on its own |
-| `src/Storage/FieldStorageResourceStorage.php` | Where a storage's values are kept: its field storage config entity |
 | `src/Access/FieldInstanceAccess.php` | Optional: what the permission cannot say, such as a locked storage |
 
 What each gives:
