@@ -74,6 +74,33 @@ and names it on the plugin class:
 
 The placement resource places it with no code added for it.
 
+## Swapping in the generated form {#generated-form}
+
+Core's add-block route can point at the create operation's form. The plugin and theme in its path fix those keys, and the region and weight in its query start them, as core's form does today:
+
+```diff
+ block.admin_add:
+   path: '/admin/structure/block/add/{plugin_id}/{theme}'
+   defaults:
+-    _controller: '\Drupal\block\Controller\BlockAddController::blockAddConfigureForm'
++    _form: 'Drupal\surface\Form\SurfaceOperationForm'
++    _surface_resource: 'Drupal\surface_examples_block\Resource\BlockPlacementResource'
++    _surface_operation: 'create'
++    _surface_fixed: { plugin: '{plugin_id}', theme: '{theme}' }
++    _surface_query: { region: region, weight: weight }
+     theme: null
+     _title: 'Configure block'
+   requirements:
+     _permission: 'administer blocks'
++    plugin_id: '[^/]+'
++    theme: '[^/]+'
+```
+
+The two requirements bound the path values a route may put into the form. The proof of concept tests this swap on core's own route.
+
+!!! question "TBD"
+    Core's edit and delete routes name the block `{block}`, and the operations take `$id`. A route cannot yet map a path variable onto an operation parameter of another name, so those two routes are not swapped. The class and key names are the proof of concept's; core's are open.
+
 ## What it gets
 
 Every way in runs the same operation and the same checks. A region of another theme sent for a block in Stark is refused at `/region`: "The stark theme has no region named pre_content." Before it writes, the storage checks the whole block against core's `block.block.*` config schema, so what is stored is what core's block form would store.
