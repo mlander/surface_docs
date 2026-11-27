@@ -14,10 +14,16 @@ The module that owns block placement adds the resource; in core that is the bloc
 --8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:35:48"
 ```
 
-The `settings` key depends on the chosen plugin:
+Its input is every key a placed block has: label, machine name, whether the label shows, the plugin, the plugin's settings, theme, region, weight, status and visibility conditions. The `settings` key depends on the chosen plugin:
 
 ```php
---8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:123:131"
+--8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:96:162"
+```
+
+The regions offered depend on the theme chosen:
+
+```php
+--8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:167:170"
 ```
 
 `x-surface-variants` names the class that gives each plugin's structure. A plugin that declares a structure gets it. Any other plugin gets the structure read from its config schema, `block.settings.<plugin id>`, with the plugin's defaults laid over it:
