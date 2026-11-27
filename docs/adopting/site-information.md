@@ -1,3 +1,7 @@
+---
+human_reviewed: 2026-11-27
+---
+
 # Example 1: Site information
 
 Site information is a basic settings form: one config object, edited by one form behind one permission. Simple config like this has a schema and nothing else: no named actions, no access of its own, no validation on write. Rung 1 gives it a resource beside its existing form. This example plays core converting its own settings, so the resource declares every key in Portable Schema. The form keeps working as it is.
