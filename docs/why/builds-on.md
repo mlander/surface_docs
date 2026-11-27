@@ -22,7 +22,6 @@ What is written several times today, or not at all, could come from one descript
 | | Today | With one description |
 |---|---|---|
 | **Forms** | Each form writes its own `buildForm()`, `validateForm()` and `submitForm()`, and follows Form API's good practice or not | Generated from the description, built the same way every time. A hand-written form still works. |
-| **Component forms** | Canvas matches each component prop's JSON Schema to a field type and widget, which edit and store the value. A shape no core field type matches, such as a duration, needs a module to supply one. | A component's props schema is read as a structure, so its form is drawn the same way as any other. The proof of concept places a component in a block this way. |
 | **Config schema** | Written by hand, apart from the form that edits the same keys | Stays for now. For keys a module declares, it can be generated from the declaration, with a test that fails when the two drift. |
 | **What a write accepts** | Each way in reads and checks input its own way: a form's elements, a Drush command's arguments, a config action's | One pipeline at every way in: accept and coerce the input, validate it, map it to storage, then write |
 | **Permissions** | The form's route asks the permission. A Drush command, a config action or a Tool API tool that writes the same settings asks none unless its author adds it | The operation names the permission, and every way in asks it |
@@ -30,6 +29,7 @@ What is written several times today, or not at all, could come from one descript
 | **The contract** | Each way in describes its own input, if it describes it at all | One document per operation, which every way in and every client reads. An alter on the description, such as another module adding a key or narrowing a rule, shows up in all of them alike. A form alter changes one form. |
 | **Dry run** | Rare: a form's checks and its save are tied to the form, so no other way in can check without saving | Every operation can run without writing and answer what would change and what would be refused |
 | **Observability** | Each way in logs, or not, on its own | Every write goes through one runner, so one place can record who ran what, through which way in, and what was refused |
+| **Component forms** | Canvas matches each component prop's JSON Schema to a field type and widget, which edit and store the value. A shape no core field type matches, such as a duration, needs a module to supply one. | A component's props schema is read as a structure, so its form is drawn the same way as any other. The proof of concept places a component in a block this way. |
 
 !!! question "TBD"
     What the runner records itself, and what it leaves to logging and other modules, is an [open question](../open/index.md#observability).
