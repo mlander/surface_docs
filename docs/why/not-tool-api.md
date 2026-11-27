@@ -48,7 +48,6 @@ With a resource, the field on a bundle is described once and each action is an o
 |---|---|
 | `src/Resource/FieldInstanceResource.php` | The field's structure and its operations: create with a new storage, reuse an existing storage, update. A read is added beside them; a delete would be one more operation here. |
 | `src/Storage/FieldInstanceResourceStorage.php` | Where a field's values are kept: its field config entity |
-| `src/Access/FieldInstanceAccess.php` | Optional: what the permission cannot say, such as a locked storage |
 
 What each gives:
 
