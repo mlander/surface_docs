@@ -69,9 +69,9 @@ nav:
       - What it could consolidate: why/consolidates.md
   - Adopting it:
       - adopting/index.md
-      - Place Block: adopting/place-block.md
-      - Site information: adopting/site-information.md
-      - Fields and Tool API tools: adopting/fields-and-tools.md
+      - "Example 1: Site information": adopting/site-information.md
+      - "Example 2: Placing a block": adopting/place-block.md
+      - "Example 3: Fields and Tool API tools": adopting/fields-and-tools.md
       - What contrib sees: adopting/contrib.md
   - Path into core:
       - path/index.md

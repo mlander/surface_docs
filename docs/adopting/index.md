@@ -24,7 +24,7 @@ Rung 3 is the first rung that costs another module anything, which is why it com
 
 Each is built and tested in the proof of concept, on code from core or a contributed module.
 
-- **[Placing a block](place-block.md).** A block that declares its structure and core's branding block, which has only config schema, placed through one resource.
-- **[Site information](site-information.md).** A config object gets an operation with the permission its route asks today, and every key declared in Portable Schema.
-- **[Fields and Tool API tools](fields-and-tools.md).** One field resource with three operations becomes three Tool API tools whose inputs agree, compared with Tool Belt's `field_add`.
+- **[Example 1: Site information](site-information.md).** A basic settings form. A config object gets an operation with the permission its route asks today, and every key declared in Portable Schema.
+- **[Example 2: Placing a block](place-block.md).** A block that declares its structure and core's branding block, which has only config schema, placed through one resource.
+- **[Example 3: Fields and Tool API tools](fields-and-tools.md).** One field resource with three operations becomes three Tool API tools whose inputs agree, compared with Tool Belt's `field_add`.
 - **[What contrib sees](contrib.md).** What changes for a contributed module at each rung.

@@ -1,4 +1,4 @@
-# Placing a block
+# Example 2: Placing a block
 
 A placed block becomes one resource, `block.placement`, with create, update and delete operations. Its `settings` key holds whatever the chosen block plugin takes. A plugin that declares its structure is placed through that structure (rung 2). A plugin with only config schema has its structure read from that schema and is placed the same way, with no change to the plugin (rung 0).
 

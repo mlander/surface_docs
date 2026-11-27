@@ -1,4 +1,4 @@
-# Fields and Tool API tools
+# Example 3: Fields and Tool API tools
 
 A field on a bundle becomes one resource, `field.instance`, with three operations: create a field with a new storage, reuse an existing storage on another bundle, and update a field. Each operation becomes a Tool API tool. The three read one structure, so their inputs agree.
 
