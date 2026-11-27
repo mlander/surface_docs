@@ -76,9 +76,11 @@ Rung 3 points the form's route at the operation. The form is then built from the
 
 The proof of concept puts the same defaults on a second route, `/admin/config/system/surface-site-information`, so core's form stays as it is. The class and key names are the proof of concept's; core's are open. With the route swapped, `SiteInformationForm` can be deleted at rung 4, apart from one thing the resource does not do yet: show PHP's `sendmail_from` address when no email address is stored.
 
-## Reading keys you do not own {#declaring-a-key}
+## Before the owner converts {#declaring-a-key}
 
-A module that does not own a config object reads its keys from config schema instead of copying the owner's rules. The performance example plays a module outside core over `system.performance`. It reads the two aggregation keys and declares only the page cache's maximum age, with the periods core's form offers, because config schema allows any integer:
+Core would convert its own settings as above. Until it does, another module can still put a resource over a core config object, for example to offer it as Tool API tools. That module reads the keys from core's config schema, so it gets core's types, labels and checks without copying them. It is a bridge: once core declares the keys, the module uses core's resource instead.
+
+The performance example is such a module, over `system.performance`. It reads the two aggregation keys. Config schema allows any integer for the page cache's maximum age, so it declares that one key with the periods core's form offers. A declared key is held to config schema at its path, so it can only narrow what core allows:
 
 ```php
 --8<-- "modules/surface_examples_performance/src/Resource/PerformanceResource.php:70:80"
