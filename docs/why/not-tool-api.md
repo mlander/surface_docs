@@ -31,9 +31,9 @@ A module still writes a Tool API tool where an action is not an operation on a r
 
 Tool API takes Typed Data input definitions today and is to adopt Portable Schema as well. A hand-written Tool API tool and a published operation will then describe their input in the same schema language.
 
-## Field CRUD both ways {#field-crud}
+## Tool API tools compared with a resource {#compared}
 
-With Tool API tools, each action on a field is its own plugin class with its own input definition. Tool Belt ships these:
+Take a field on a bundle, which is added, updated, deleted and read. With Tool API tools, each of those actions is its own plugin class with its own input definition. Tool Belt ships these:
 
 | File | Holds |
 |---|---|
