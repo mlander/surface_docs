@@ -8,7 +8,7 @@ Portable Schema is how a [structure](structures.md) is written down and served. 
 
 ## A served contract {#served}
 
-A client that wants to send a valid write should learn the rules before it sends, not by being refused. Today core's serialization module describes what a normalizer outputs, and nothing describes what an operation on a config object or an entity accepts. Step 4 composes, for each operation from [step 2](resources-operations.md), a schema of what it accepts from the definitions [step 1](groundwork.md) enriched, and serves it beside the operation. A Tool API tool and a headless form then read the same document.
+A client that wants to send a valid write should learn the rules before it sends, not by being refused. Today core's serialization module describes what a normalizer outputs, and nothing describes what an operation on a config object or an entity accepts. Step 4 composes, for each operation from [step 2](resources-operations.md), a schema of what it accepts from the definitions [step 1](groundwork.md) enriched, and serves it beside the operation. A Tool API tool, a headless form and, in the proof of concept, the OpenAPI document then read the same schema.
 
 The schema of the newsletter settings' "configure" operation, from [Structures](structures.md#declared-in-code), is plain JSON Schema with one extension keyword, `portable-check`, naming the `Email` constraint the server also runs:
 

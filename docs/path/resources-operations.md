@@ -28,6 +28,8 @@ A resource sits beside the forms a module already has. Each form is one operatio
 | `/admin/config/system/site-information` | configure | `surface:system.site:configure` | `PATCH /surface-api/system.site` |
 | | read | `surface:system.site:read` | `GET /surface-api/system.site` |
 
+In the proof of concept, one OpenAPI 3.1 document at `/surface-api/openapi.json` describes every HTTP endpoint, with the schema of what each operation accepts.
+
 Any operation also runs from the command line. The proof of concept adds one Drush command that runs an operation as an account, through the same checks. Without `--values` it only says whether the account may run the operation and which keys it takes:
 
 ```bash
