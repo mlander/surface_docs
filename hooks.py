@@ -3,7 +3,8 @@
 Reads topics.yml once, then:
 
 - puts a status strip under the title of every page whose front matter
-  names a `topic`;
+  names a `topic`, and a "Human approved" mark above it on every page
+  whose front matter has `approved: <date>` (reviewed in full and frozen);
 - replaces the line `<!-- board -->` with the table of every talking point;
 - fails the build when a page names a topic that topics.yml does not list,
   or a topic carries a level or destination that is not defined.
@@ -110,20 +111,35 @@ def _board(page_file: str) -> str:
     return "\n".join(lines)
 
 
-def on_page_markdown(markdown, page, config, files):
-    if "<!-- board -->" in markdown:
-        markdown = markdown.replace("<!-- board -->", _board(page.file.src_uri))
-    slug = page.meta.get("topic")
-    if not slug:
-        return markdown
-    topic = _DATA["by_slug"].get(slug)
-    if topic is None:
-        raise PluginError(f"{page.file.src_uri} names topic {slug!r}, which topics.yml does not list.")
+def _approved(date) -> str:
+    return (
+        '<div class="approved"><span class="approved-box" aria-hidden="true">&#x2611;</span> '
+        f"<strong>Human approved</strong> {date}</div>\n"
+    )
+
+
+def _under_title(markdown: str, block: str) -> str:
     lines = markdown.split("\n")
     for index, line in enumerate(lines):
         if line.startswith("# "):
-            lines.insert(index + 1, "\n" + _strip(topic, page.file.src_uri))
+            lines.insert(index + 1, "\n" + block)
             break
     else:
-        lines.insert(0, _strip(topic, page.file.src_uri))
+        lines.insert(0, block)
     return "\n".join(lines)
+
+
+def on_page_markdown(markdown, page, config, files):
+    if "<!-- board -->" in markdown:
+        markdown = markdown.replace("<!-- board -->", _board(page.file.src_uri))
+    approved = page.meta.get("approved")
+    slug = page.meta.get("topic")
+    if slug:
+        topic = _DATA["by_slug"].get(slug)
+        if topic is None:
+            raise PluginError(f"{page.file.src_uri} names topic {slug!r}, which topics.yml does not list.")
+        markdown = _under_title(markdown, _strip(topic, page.file.src_uri))
+    # Inserted last, so it sits directly under the title, above the strip.
+    if approved:
+        markdown = _under_title(markdown, _approved(approved))
+    return markdown

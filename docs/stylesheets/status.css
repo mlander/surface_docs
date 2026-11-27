@@ -26,3 +26,22 @@
   font-style: italic;
   opacity: 0.8;
 }
+
+.approved {
+  display: inline-block;
+  margin: 0 0 0.8em;
+  padding: 0.2em 0.7em;
+  border: 1px solid #2e7d32;
+  border-radius: 0.2rem;
+  color: #2e7d32;
+  font-size: 0.75rem;
+}
+
+.approved-box {
+  font-size: 0.95rem;
+}
+
+[data-md-color-scheme="slate"] .approved {
+  border-color: #66bb6a;
+  color: #66bb6a;
+}

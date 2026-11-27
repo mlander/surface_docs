@@ -1,5 +1,6 @@
 ---
 topic: tool-api
+approved: 2026-11-26
 ---
 
 # Why not Tool API

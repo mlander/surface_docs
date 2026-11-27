@@ -1,3 +1,7 @@
+---
+approved: 2026-11-25
+---
+
 # Describe it once
 
 Drupal describes the same data several times. A block plugin with settings requires a config schema file, `defaultConfiguration()`, a form in `blockForm()`, checks in `blockValidate()` and copying in `blockSubmit()`. In Drupal core 11.4 the site name is described in 6 places, a content type's "Create new revision" setting in 5, and the menu block's number of levels in 6. A Tool API tool or an HTTP client needs it described once more.
