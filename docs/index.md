@@ -18,13 +18,13 @@ The ask is one new input layer beside forms. Every way in reads it, so all of th
 
 - **Additive.** It [builds on](why/builds-on.md) config schema, field definitions, constraint plugins, JSON Schema, Form API and entity storage and access. Core's first changes are small patches to Typed Data, validation and the Field API, each fit for a [minor release](path/release-fit.md). Nothing is removed to make room.
 - **Opt in.** Nothing changes until a module chooses, and stored data does not change. Existing config schema and field definitions are read as they are.
-- **A small first step.** A module adds one resource class beside its form(s). Each of its operations derives Tool API tools and HTTP calls, runs from Drush, and gets the same checks at every way in. For the site information settings that is 90 lines of code ([Site information](adopting/site-information.md)).
+- **A small first step.** A module adds one resource class beside its form(s). Each of its operations derives a Tool API tool, an HTTP endpoint and a Drush command, with the same checks at every way in. For the site information settings that is 90 lines of code ([Site information](adopting/site-information.md)).
 - **Forms when wanted.** A generated form replaces a hand-written one at the module's own pace, or never. `hook_form_alter()` still works on it, and since it is drawn from the [Portable Schema](path/portable-schema.md) document, a headless client can draw the same form.
 - **Deprecation on core's schedule.** Older APIs are deprecated only once the new ones are in use, [in a minor release and removed in the next major](https://www.drupal.org/about/core/policies/core-change-policies/allowed-changes#s-deprecations).
 
 ## Why not Tool API tools?
 
-Core could add a Tool API tool for each action on each thing. One thing would then have several tools, each in its own file with its own input, and an alter would have to find and change each one. Or core could add one resource with its operations, and every operation is published as a Tool API tool. The tools come from the description, and so do the form's checks, the HTTP call and the Drush command. [Why not Tool API?](why/not-tool-api.md) compares the two.
+Core could add a Tool API tool for each action on each thing. One thing would then have several tools, each in its own file with its own input, and an alter would have to find and change each one. Or core could add one resource with its operations, and every operation is published as a Tool API tool. The tools come from the description, and so do the form's checks, the HTTP endpoint and the Drush command. [Why not Tool API?](why/not-tool-api.md) compares the two.
 
 ## Where to go next
 
