@@ -50,7 +50,7 @@ What is added:
 | The resource | 78 |
 | The storage | 12 |
 | **Total** | **90** |
-| Optional: a route for a generated form at a second path | 9 |
+| Optional, at rung 3: the route points at the generated form ([below](#generated-form)) | 3 |
 
 Code lines leave out blank lines and comments. **Removed: nothing.** Core's form, its route and its config schema are not touched.
 
@@ -62,11 +62,11 @@ Two operations. The resource declares `configure`, and a `read` is added beside 
 |---|---|
 | Tool API tool | `surface:system.site:configure` and `surface:system.site:read` |
 | Drush | `drush surface:run system.site configure` |
-| Generated form | `/admin/config/system/surface-site-information`, if the optional route is added |
+| Generated form | `/admin/config/system/site-information`, once its route points at the generated form ([below](#generated-form)) |
 
 The proof of concept also serves it as `PATCH /surface-api/system.site`, listed in its OpenAPI document; HTTP is not proposed for core now. A write through any of them asks "administer site configuration", runs the same checks, and keeps the keys the resource does not declare as they were. An address that is not an email address is refused at `/mail`, and nothing is written.
 
-Core's form at `/admin/config/system/site-information` saves through `Config::save()` as it does today, and does not run the operation's checks.
+Until its route is swapped, core's form at `/admin/config/system/site-information` saves through `Config::save()` as it does today, and does not run the operation's checks.
 
 Two known gaps: the email format refuses internationalized addresses that core's Email constraint accepts, and a name of only spaces is accepted where core's form trims it first.
 
