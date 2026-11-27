@@ -94,7 +94,7 @@ Rung 3 points the form's route at the operation. The form is then built from the
      _permission: 'administer site configuration'
 ```
 
-The proof of concept puts the same defaults on a second route, `/admin/config/system/surface-site-information`, so core's form stays as it is. With the route swapped, `SiteInformationForm` can be deleted at rung 4, apart from one thing the resource does not do yet: show PHP's `sendmail_from` address when no email address is stored.
+The proof of concept puts the same defaults on a second route, `/admin/config/system/surface-site-information`, so core's form stays as it is. With the route swapped, `SiteInformationForm` can be deleted at rung 4.
 
 !!! question "TBD"
     The form class and route key names are the proof of concept's; core's are open.
