@@ -57,6 +57,25 @@ Core's form at `/admin/config/system/site-information` saves through `Config::sa
 
 Two known gaps: the email format refuses internationalized addresses that core's Email constraint accepts, and a name of only spaces is accepted where core's form trims it first.
 
+## Swapping in the generated form {#generated-form}
+
+Rung 3 points the form's route at the operation. The form is then built from the resource on each request: the declared titles, descriptions, defaults and groups, saved through the operation's checks. On core's own route, one line changes and two are added:
+
+```diff
+ system.site_information_settings:
+   path: '/admin/config/system/site-information'
+   defaults:
+-    _form: '\Drupal\system\Form\SiteInformationForm'
++    _form: '\Drupal\surface\Form\SurfaceOperationForm'
++    _surface_resource: 'Drupal\surface_examples_site\Resource\SiteInformationResource'
++    _surface_operation: 'configure'
+     _title: 'Basic site settings'
+   requirements:
+     _permission: 'administer site configuration'
+```
+
+The proof of concept puts the same defaults on a second route, `/admin/config/system/surface-site-information`, so core's form stays as it is. The class and key names are the proof of concept's; core's are open. With the route swapped, `SiteInformationForm` can be deleted at rung 4, apart from one thing the resource does not do yet: show PHP's `sendmail_from` address when no email address is stored.
+
 ## Reading keys you do not own {#declaring-a-key}
 
 A module that does not own a config object reads its keys from config schema instead of copying the owner's rules. The performance example plays a module outside core over `system.performance`. It reads the two aggregation keys and declares only the page cache's maximum age, with the periods core's form offers, because config schema allows any integer:
