@@ -31,6 +31,41 @@ A module still writes a Tool API tool where an action is not an operation on a r
 
 Tool API takes Typed Data input definitions today and is to adopt Portable Schema as well. A hand-written Tool API tool and a published operation will then describe their input in the same schema language.
 
+## Field CRUD both ways {#field-crud}
+
+With Tool API tools, each action on a field is its own plugin class with its own input definition. Tool Belt ships these:
+
+| File | Holds |
+|---|---|
+| `src/Plugin/tool/Tool/FieldStorageAdd.php` | Creates a field storage |
+| `src/Plugin/tool/Tool/FieldAdd.php` | Adds a field to a bundle, using an existing storage |
+| `src/Plugin/tool/Tool/FieldUpdate.php` | Updates a field on a bundle |
+| `src/Plugin/tool/Tool/FieldDelete.php` | Deletes a field from a bundle |
+| `src/Plugin/tool/Tool/EntityBundleFieldDefinitions.php` | Reads a bundle's field configuration |
+
+With a resource, the field is described once and each action is an operation on it. The proof of concept's field example:
+
+| File | Holds |
+|---|---|
+| `src/Resource/FieldInstanceResource.php` | The field's structure and its operations: create with a new storage, reuse an existing storage, update. A read is added beside them; a delete would be one more operation here. |
+| `src/Storage/FieldInstanceResourceStorage.php` | Where a field's values are kept: its field config entity |
+| `src/Access/FieldInstanceAccess.php` | Optional: what the permission cannot say, such as a locked storage |
+
+What each gives:
+
+| | Tool API tools | A resource |
+|---|---|---|
+| Tool API tools | One per class | One per operation, generated |
+| Drush | `drush tool:run` | `drush tool:run` and `drush surface:run` |
+| HTTP endpoints | None | One per operation |
+| OpenAPI | None | One document for every endpoint |
+| Form | Field UI's own, separate | Generated from the same structure |
+
+A Tool API tool is an action with an input and an output. It has no identity, path or method, so nothing in its structure maps it to an HTTP endpoint or an OpenAPI document. An MCP server can expose it, as a tool call. A resource has identity keys and named operations, which map to a path and a method.
+
+!!! question "TBD"
+    HTTP and OpenAPI are assumed. Where they live, in core or in a module, is [open](../open/later.md).
+
 ## On real code
 
-The field instance resource in the proof of concept has three operations: create a field, re-use an existing field, and update one. Each is published as a Tool API tool. Compared with a hand-written Tool API tool that adds a field to a bundle, these offer the field type's settings with their real choices and labels, where config schema gives only bare types. The same resource also produces the Field UI form. [Fields and Tool API tools](../adopting/fields-and-tools.md) shows both input schemas side by side.
+Compared with Tool Belt's `FieldAdd`, the field resource's Tool API tools offer the field type's settings with their real choices and labels, where config schema gives only bare types. [Fields and Tool API tools](../adopting/fields-and-tools.md) shows both input schemas side by side.
