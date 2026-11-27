@@ -48,9 +48,6 @@ A singleton's, the newsletter settings of the first example:
 
 The read is derived from the update.
 
-!!! question "TBD"
-    Whether core names a config object's operations on a PHP class, as here, or in its config schema is open.
-
 ### Where an operation's keys come from {#keys}
 
 - **Declared by the module that owns the config.** Each key is declared in Portable Schema with its title, description, default and checks ([Structures](structures.md#declared-in-code)). Core's common settings forms would be converted ahead of time. A declared key is checked against the config schema at its path, so it can only narrow what config schema allows.
