@@ -52,7 +52,7 @@ The form draws a password field that keeps the stored value when left empty, the
 
 ### Another module
 
-A module adds its own keys to another module's structure in an alter class. It may narrow the owner's rules, never widen them. Its keys are stored under `third_party_settings.<module>`, so the owner's storage and schema never need to know them. Config entities already have this place; [step 3](https://git.drupalcode.org/project/surface/-/blob/3f708be7/docs/core-gaps.md#step-3-third-party-settings-for-simple-config) gives it to simple config.
+A module adds its own keys to another module's structure in an alter class. It may narrow the owner's rules, never widen them. Its keys are stored under `third_party_settings.<module>`, so the owner's storage and schema never need to know them. Config entities already have this place; [step 3](https://git.drupalcode.org/project/surface/-/blob/631b9992/docs/core-gaps.md#step-3-third-party-settings-for-simple-config) gives it to simple config.
 
 A module that adds a license to an event registration, limits capacity to 100 without one, and rewords one label:
 

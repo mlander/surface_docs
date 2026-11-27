@@ -13,27 +13,27 @@ For a field type's settings, `field_add` reads the config schema, the only descr
 The field resource is declared once, for every field type; in core it would sit in the field module. Identity, storage and access are on the class:
 
 ```php
---8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:54:59"
+--8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:53:58"
 ```
 
 The three operations are methods on the class:
 
 ```php
---8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:68:74"
+--8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:67:73"
 ```
 
 ```php
---8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:93:99"
+--8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:91:97"
 ```
 
 ```php
---8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:115:119"
+--8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:111:115"
 ```
 
 Each asks `administer %entity_type fields`, the permission Field UI already defines. The keys are declared once, in `defineInputs()`, and every operation reads them:
 
 ```php
---8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:189:211"
+--8<-- "modules/surface_examples_field/src/Resource/FieldInstanceResource.php:178:200"
 ```
 
 `settings` depends on `field_type`. A field type whose module declares a settings class uses it. Every other field type has its settings read from its config schema, `field.field_settings.<field type>`, so the Tool API tools can add any field Field UI can.
@@ -54,7 +54,7 @@ The operations become `surface:field.instance:create`, `surface:field.instance:r
 
 ## Compared with `field_add`
 
-Both documents are the settings input for adding an address field, as Tool API's serializer hands it to a client. The proof of concept's [comparison test](https://git.drupalcode.org/project/surface/-/blob/3f708be7/modules/surface_examples_field/COMPARISON.md) generates them.
+Both documents are the settings input for adding an address field, as Tool API's serializer hands it to a client. The proof of concept's [comparison test](https://git.drupalcode.org/project/surface/-/blob/631b9992/modules/surface_examples_field/COMPARISON.md) generates them.
 
 Tool Belt's `field_add`, read from config schema, the whole `field_overrides` key:
 

@@ -8,16 +8,16 @@ A placed block is the config entity `block.block.<id>`, and each plugin describe
 
 ## The resource, added once
 
-The module that owns block placement adds the resource; in core that is the block module. It names the block config entity as its storage, the machine name as its identity, and its operations: create, update and delete, with a read added beside them. Update names the block by its machine name and keeps it in its own theme. Each asks "administer blocks", the permission core's block layout asks today:
+The module that owns block placement adds the resource; in core that is the block module. It names the block config entity as its storage, the machine name as its identity, and its operations: create, update and delete, with a read added beside them. Update and delete take only the machine name. The storage loads the block by it, refuses a name that names no block, and holds the theme to the one the block is in. Each asks "administer blocks", the permission core's block layout asks today:
 
 ```php
---8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:35:87"
+--8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:35:83"
 ```
 
 Its input is every key a placed block has: label, machine name, whether the label shows, the plugin, the plugin's settings, theme, region, weight, status and visibility conditions. The `settings` key depends on the chosen plugin:
 
 ```php
---8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:96:162"
+--8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:92:156"
 ```
 
 `plugin` gets its choices from the `settings` variants: the block plugins the layout offers, each under its admin label.
@@ -25,7 +25,7 @@ Its input is every key a placed block has: label, machine name, whether the labe
 The regions offered depend on the theme chosen:
 
 ```php
---8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:167:170"
+--8<-- "modules/surface_examples_block/src/Resource/BlockPlacementResource.php:161:164"
 ```
 
 `x-surface-variants` names the class that gives each plugin's structure. A plugin that declares a structure gets it. Any other plugin gets the structure read from its config schema, `block.settings.<plugin id>`, with the plugin's defaults laid over it:
