@@ -9,7 +9,7 @@ Beside existing code it adds an optional route for a generated form, and an acce
 The one new piece is the description and the operations that run through it. It builds on:
 
 - **Config schema and field definitions.** Read into structures for config another module owns and has not converted, and for plugins and config with no resource class.
-- **Constraint plugins.** A check with no JSON Schema keyword, such as core's `ValidPath`, runs as core's constraint plugin. Keyword checks, such as a length or a pattern, run in Portable Schema's validator.
+- **Constraint plugins.** Core's constraints stay. Those JSON Schema can state, such as a length or a pattern, are written as keywords a client can check itself; the rest, such as `ValidPath`, run on the server as core's plugins ([how each lands](../path/portable-schema.md#constraints)).
 - **JSON Schema.** Core already derives it from Typed Data and uses it for component props. A structure is written in it.
 - **Form API elements.** A generated form is built from them. Field widgets do not change.
 - **Tool API.** Every operation is published as a Tool API tool.

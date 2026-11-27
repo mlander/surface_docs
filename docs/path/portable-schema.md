@@ -18,6 +18,17 @@ The schema of the newsletter settings' "configure" operation, from [Structures](
 
 The served contract is never stricter than the validation that judges the write: what validation accepts, the schema accepts. Where a rule cannot be stated as a keyword, the schema stays wider and names the rule for the server to check. Tests run each example's accepted and refused values through validation and through a standard JSON Schema validator.
 
+## Core's constraints in the document {#constraints}
+
+Core's constraint plugins stay. Each lands in the document in one of four ways, so a client knows which checks it can run itself and which only the server runs:
+
+| Kind | Core's constraints | In the document |
+|---|---|---|
+| Converts to a keyword | Range, Length, Count, NotBlank, Regex, UniqueItems, Choice | `minimum` and `maximum`, `minLength` and `maxLength`, `minItems` and `maxItems`, `pattern`, `uniqueItems`, and `oneOf` with each choice's label. A client checks these itself. |
+| A keyword and a server check | Email, Uuid | `format`, with the constraint also named under `portable-check`, since the format admits values the constraint refuses |
+| Runs only on the server | `ValidPath`, a reference that must name an existing entity, a check written in code | Named under `portable-check` with its options. The client knows the check exists and the server runs it. |
+| Deferred | A list from the site too long to write out, such as the entities to choose from | Left out and marked deferred, with an `x-portable-links` link where a client fetches the list |
+
 ## Extension keywords
 
 Plain JSON Schema keywords come first. Most of what core's definitions cannot say today has a standard keyword that core's output does not use yet: `maxLength`, `default`, `if`/`then` for a rule between keys, `writeOnly` for a secret. A generic validator reads all of them. A small set needs extension keywords:
